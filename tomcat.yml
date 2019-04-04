@@ -1,0 +1,60 @@
+---
+# This is my first playbook
+
+# HEADER SECTION
+ - name: This playbook will create a file
+   hosts: webservers
+   vars:
+     java: java-1.8.0-openjdk-devel
+
+# TASK SECTION
+   tasks:
+     - name: To install dependency
+       yum:
+         name: "{{ java }}"
+         state: installed
+
+     - name: To create a group
+       group:
+         name: tomcatadm
+         state: present
+
+     - name: To create a user
+       user:
+         name: tomcat
+         state: present
+         groups: tomcatadm
+
+     - name: to create a dir
+       file:
+         path: /opt/tomcat_logs
+         state: directory
+         mode: 0644
+
+     - name: To download apache tomcat
+       get_url: 
+         url: http://mirrors.estointernet.in/apache/tomcat/tomcat-8/v8.5.37/bin/apache-tomcat-8.5.37.tar.gz
+         mode: 0755
+         dest: /opt/apache-tomcat-8.5.37.tar.gz
+         backup: yes
+         timeout: 20
+
+     - name: To untar and unzip the package
+       unarchive:
+         src: /opt/apache-tomcat-8.5.37.tar.gz
+         dest: /opt/
+         mode: 0755
+         remote_src: yes
+
+     - name: to fetch the server.xml file from remote servers
+       fetch:
+         src: /opt/apache-tomcat-8.5.37/conf/server.xml
+         dest: /opt/
+
+     - name: To update the apache tomcat config
+       copy:
+         src: /opt/playbooks/server.xml
+         dest: /opt/apache-tomcat-8.5.37/conf/server.xml
+
+     - name: To start apache tomcat
+       command: nohup /opt/apache-tomcat-8.5.37/bin/startup.sh &

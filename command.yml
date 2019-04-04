@@ -1,0 +1,33 @@
+---
+# This is my first playbook
+
+# HEADER SECTION
+ - name: This playbook will create a file
+   hosts: webservers
+
+# TASK SECTION
+   tasks:
+
+     - name: To create a folder using command module
+       command: mkdir goutham
+       args:
+         chdir: /opt
+         creates: /opt/goutham
+
+     - name: To read the contents of a file
+       command: cat /opt/config.xml
+       register: output
+
+     - name: To print the contents of your variable
+       debug:
+         var: output.stdout
+
+     - name: To read the contents of a file
+       file:
+         path: /tmp/abc.txt
+         state: touch
+       register: fileout
+
+     - name: To print the contents of your variable
+       debug:
+         var: fileout.uid

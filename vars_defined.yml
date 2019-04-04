@@ -1,0 +1,11 @@
+- hosts: localhost
+  vars:
+    test_var: true
+  tasks:
+    - name: test_var is "{{ test_var }}" (when defined)
+      debug: msg="test_var is defined"
+      when: test_var is defined
+
+    - name: test_var is "{{ test_var }}" (when not defined)
+      debug: msg="test_var is not defined"
+      when: test_var is not defined

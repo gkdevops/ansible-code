@@ -1,0 +1,63 @@
+---
+- hosts: localhost
+  sudo: yes
+
+  vars:
+    test1: "Hello World"
+
+  tasks:
+    - name: Instlocalhost common software requirements
+      yum: name={{ item }} state=present
+      with_items:
+        - git
+        - wget
+        - vim
+
+- hosts: localhost
+  sudo: yes
+
+  vars:
+    test1: "Hello World"
+
+  tasks:
+    - command: echo {{ item }}
+      loop: [ 0, 2, 4, 6, 8, 10 ]
+      when: item > 5
+
+- hosts: localhost
+  sudo: yes
+
+  vars:
+    test1: "Hello World"
+
+  tasks:
+    - command: echo {{ item }}
+      loop: "{{ mylist|default([]) }}"
+      when: item > 5
+
+- hosts: localhost
+  sudo: yes
+
+  vars:
+    test1: "Hello World"
+
+  tasks:
+    - name: Remove users �Chuck� and �Craig� from the system.
+      user:
+        name: "{{ item }}"
+        state: absent
+        remove: yes
+      with_items:
+        - chuck
+        - craig
+
+- hosts: localhost
+  sudo: yes
+
+  vars:
+    test1: "Hello World"
+
+  tasks:
+    - command: echo {{ item.key }}
+      loop: "{{ query('dict', mydict|default({})) }}"
+      when: item.value > 5

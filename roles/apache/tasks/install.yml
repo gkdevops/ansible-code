@@ -1,0 +1,7 @@
+---
+# Install code for apache
+
+ - name: To install Apache
+   yum:
+     name: "{{ package }}"
+     state: installed

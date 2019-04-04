@@ -1,0 +1,15 @@
+---
+# HEADER SECTION
+ - name: This playbook will test forloop
+   hosts: webservers
+   vars:
+     myfiles: ['file1.txt', 'file2.txt', 'file3.txt']
+
+# TASK SECTION
+   tasks:
+     - name: To create 3 files
+       file:
+         path: /opt/{{ item }}
+         state: touch
+         mode: 0600
+       with_items: "{{ myfiles }}"

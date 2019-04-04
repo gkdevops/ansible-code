@@ -1,0 +1,31 @@
+---
+# This is my first playbook
+
+# HEADER SECTION
+ - name: This playbook will run on webserevers
+   hosts: webservers
+
+# TASK SECTION
+   tasks:
+     - name: Creating a file called helloworld.html
+       file:
+         path: /opt/websever.html
+         state: touch
+         owner: root
+         group: root
+         mode: 0755
+
+# HEADER SECTION
+ - name: This playbook will run on DB Servers
+   hosts: db
+
+# TASK SECTION
+   tasks:
+     - name: Creating a file called db.html
+       file:
+         path: /opt/db.html
+         state: touch
+         owner: root
+         group: root
+         mode: 0755
+

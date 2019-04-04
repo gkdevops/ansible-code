@@ -1,0 +1,13 @@
+- hosts: localhost
+  user: chilakgo
+  connection: local
+  tasks:
+    - name: Check if /tmp exists
+      stat:
+        path: /tmp
+      register: stat_tmp
+
+    - name: Say Hello when "/tmp" exists
+      debug: msg="Hi! the directory /tmp exists"
+      when:
+        - stat_tmp.stat.exists|bool == true

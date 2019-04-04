@@ -1,0 +1,19 @@
+---
+# HEADER SECTION
+ - name: This playbook will restart ur system service
+   hosts: webservers
+   become_user: jenkins
+
+# TASK SECTION
+   tasks:
+     - name: To create a file
+       file:
+         path: /home/jenkins/permissions.txt
+         state: touch
+
+     - name: To create a file
+       file:
+         path: /opt/perm.txt
+         state: touch
+       become_user: jenkins
+         

@@ -1,0 +1,9 @@
+---
+# Header Section
+ - name: This simple yaml file will call apache role
+   hosts: webservers
+   vars:
+     myname: Kumar
+
+   roles:
+     - apache
