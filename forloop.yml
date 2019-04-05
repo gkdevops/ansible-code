@@ -16,8 +16,9 @@
 
      - name: To install 2 packages
        yum:
-         name: [u'unzip', u'wget']
+         name: "{{ item }}"
+#         name: [u'unzip', u'wget']
          state: absent
-#       with_items:
-#         - wget
-#         - unzip
+       with_items:
+         - wget
+         - unzip

@@ -1,0 +1,41 @@
+---
+# This is my first playbook
+
+# HEADER SECTION
+ - name: This playbook will create a file
+   hosts: webservers
+   gather_facts: true
+   vars:
+     - myname: Goutham
+
+# TASK SECTION
+   tasks:
+     - name: To print the variable data
+       debug:
+         var: myname
+
+     - name: To print the variable data
+       debug:
+         var: ansible_distribution
+
+     - name: To print the variable data
+       debug:
+         var: ansible_default_ipv4.macaddress
+
+     - name: To print the variable data
+       debug:
+         var: ansible_architecture
+
+     - name: To print the variable data
+       debug:
+         var: ansible_processor_cores
+
+     - name: To print the variable data
+       debug:
+         var: ansible_memtotal_mb
+
+     - name: To install apache webserver in ubuntu
+       yum:
+         name: httpd
+         state: installed
+       when: ( ansible_distribution == "Ubuntu" or ansible_memtotal_mb > 900 )

@@ -5,7 +5,8 @@
  - name: This playbook will create a file
    hosts: webservers
    vars:
-     - myname: Goutham
+     myname: Goutham
+     motd_value: "{{ lookup('file', '/etc/motd') }}"
 
 # TASK SECTION
    tasks:
@@ -13,18 +14,21 @@
        debug:
          var: myname
 
-     - name: To print the variable data
-       debug:
-         var: ansible_distribution
+     - debug:
+         msg: "motd value is {{ motd_value }}"
 
-     - name: To print the variable data
-       debug:
-         var: ansible_default_ipv4.macaddress
+     - name: To print the data inside the /etc/hosts
+       command: cat /etc/hosts
+       register: host_data
 
-     - name: To print the variable data
+     - name: To print the data of host_data
        debug:
-         var: ansible_architecture
+         var: host_data
 
-     - name: To print the variable data
+     - name: To print the data of host_data
        debug:
-         var: ansible_processor_cores
+         var: host_data.rc
+
+     - name: To print the data of host_data
+       debug:
+         var: host_data.stdout_lines

@@ -3,7 +3,7 @@
  - name: This playbook will test forloop
    hosts: webservers
    vars:
-     myfiles: ['file1.txt', 'file2.txt', 'file3.txt']
+     myfiles: ['file1.txt', 'file2.txt', 'file3.txt', 'file4.txt']
 
 # TASK SECTION
    tasks:

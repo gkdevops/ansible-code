@@ -14,11 +14,10 @@
        file:
          path: /opt/helloworld.html
          state: file
+       ignore_errors: yes
 
      - name: To copy a file to all remote servers
        copy:
          src: /etc/ansible/ansible.cfg
          dest: /opt/ansible.cfg
-         owner: jenkins
-         group: jenkins
          mode: 0644
