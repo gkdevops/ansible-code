@@ -17,6 +17,7 @@ EOF
 
 apt-get update
 apt-get install -y kubelet kubeadm kubectl >/dev/null
+apt-mark hold kubelet kubeadm kubectl
 ====================================
 Run the below command only on Master
 kubeadm init
