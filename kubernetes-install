@@ -1,4 +1,6 @@
 ====================================
+NOTE: Ensure Elaastic IP is created and allocated to Kubernetes Master Server.
+====================================
 Run these below commands on all 3 servers ( master, 2 worker nodes)
 
 swapoff -a
