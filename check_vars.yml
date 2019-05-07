@@ -1,0 +1,19 @@
+---
+# # Use this code to ensure that required variables are always defined.
+# HEADER SECTION
+
+ - name: This playbook will test forloop
+   hosts: webservers
+   vars:
+     foobar_database: mydb
+     foobar_deploy_user: admin
+
+# TASK SECTION
+
+   tasks:
+     - name: Checking that required variables are set
+       fail: msg="{{ item }} is not defined"
+       when: item not in vars
+       loop:
+         - foobar_database
+         - foobar_deploy_user
