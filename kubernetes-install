@@ -3,13 +3,18 @@ NOTE: Ensure Elaastic IP is created and allocated to Kubernetes Master Server.
 ====================================
 Run these below commands on all 3 servers ( master, 2 worker nodes)
 
+# Disable Swap Space - Mandatory
 swapoff -a
+
+# Docker CE ( open source version )Installation
+apt-get update
 apt-get install -y apt-transport-https ca-certificates software-properties-common
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
 add-apt-repository "deb https://download.docker.com/linux/$(. /etc/os-release; echo "$ID") $(lsb_release -cs) stable"
 apt-get update
 apt-get install -y docker-ce
 
+# Kubernetes Components Setup
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
 cat <<EOF >/etc/apt/sources.list.d/kubernetes.list
 deb https://apt.kubernetes.io/ kubernetes-xenial main
@@ -18,7 +23,7 @@ EOF
 apt-get update
 apt-get install -y kubelet kubeadm kubectl >/dev/null
 apt-mark hold kubelet kubeadm kubectl
-====================================
+======================================
 Run the below command only on Master
 kubeadm init
 ====================================
