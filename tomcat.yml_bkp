@@ -33,28 +33,28 @@
 
      - name: To download apache tomcat
        get_url: 
-         url: http://mirrors.estointernet.in/apache/tomcat/tomcat-8/v8.5.43/bin/apache-tomcat-8.5.43.tar.gz
+         url: http://mirrors.estointernet.in/apache/tomcat/tomcat-8/v8.5.37/bin/apache-tomcat-8.5.37.tar.gz
          mode: 0755
-         dest: /opt/apache-tomcat-8.5.43.tar.gz
+         dest: /opt/apache-tomcat-8.5.37.tar.gz
          backup: yes
          timeout: 20
 
      - name: To untar and unzip the package
        unarchive:
-         src: /opt/apache-tomcat-8.5.43.tar.gz
+         src: /opt/apache-tomcat-8.5.37.tar.gz
          dest: /opt/
          mode: 0755
          remote_src: yes
 
-#     - name: to fetch the server.xml file from remote servers
-#       fetch:
-#         src: /opt/apache-tomcat-8.5.43.conf/server.xml
-#         dest: /opt/
+     - name: to fetch the server.xml file from remote servers
+       fetch:
+         src: /opt/apache-tomcat-8.5.37/conf/server.xml
+         dest: /opt/
 
      - name: To update the apache tomcat config
        copy:
-         src: /opt/server.xml
-         dest: /opt/apache-tomcat-8.5.43/conf/server.xml
+         src: /opt/playbooks/server.xml
+         dest: /opt/apache-tomcat-8.5.37/conf/server.xml
 
      - name: To start apache tomcat
-       command: "nohup /opt/apache-tomcat-8.5.43/bin/startup.sh &"
+       command: nohup /opt/apache-tomcat-8.5.37/bin/startup.sh &
