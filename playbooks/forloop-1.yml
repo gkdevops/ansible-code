@@ -1,0 +1,27 @@
+---
+# HEADER SECTION
+ - name: This playbook will test forloop
+   hosts: webservers
+
+# TASK SECTION
+   tasks:
+     - name: To create 3 files
+       file:
+         path: /opt/{{ item }}
+         state: touch
+         mode: 0744
+         owner: centos
+         group: centos
+       with_items:
+         - file1.txt
+         - file2.txt
+         - myfile.sh
+
+     - name: To install 2 packages
+       yum:
+         name: "{{ item }}"
+#         name: [u'unzip', u'wget']
+         state: removed
+       with_items:
+         - wget
+         - unzip

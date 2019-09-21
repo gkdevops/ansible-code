@@ -1,0 +1,42 @@
+---
+# This is my first playbook
+
+# HEADER SECTION
+ - name: This playbook will create a file
+   hosts: webservers
+   vars:
+     myname: Goutham
+     motd_value: "{{ lookup('file', '/etc/motd') }}"
+
+# TASK SECTION
+   tasks:
+     - name: To print the variable data named myname
+       debug:
+         var: myname
+
+     - name: To print the value of the vairable motd_value
+       debug:
+         msg: "motd value is {{ motd_value }}"
+
+     - name: To print the data inside the /etc/hosts using command module and capture
+       command: cat /etc/hosts
+       register: host_data
+
+     - name: To print the data of host_data
+       debug:
+         var: host_data
+
+     - name: To print the data of host_data
+       debug:
+         var: host_data.rc
+
+     - name: To print the data of host_data
+       debug:
+         var: host_data.stdout_lines
+
+     - name: To create a file if the command module is successful
+       user:
+         name: tomcat
+         state: present
+         groups: wheel
+       when: host_data.rc == 128

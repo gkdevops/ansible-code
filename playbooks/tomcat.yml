@@ -1,0 +1,81 @@
+---
+# This playbook will download, unzip, install and start Apache Tomcat
+
+# HEADER SECTION
+ - name: This playbook will download, unzip, install and start Apache Tomcat
+   hosts: webservers
+   gather_facts: True
+   vars:
+     java: java-1.8.0-openjdk-devel
+     url: http://mirrors.estointernet.in/apache/tomcat/tomcat-8/v8.5.45/bin/apache-tomcat-8.5.45.tar.gz
+     tomcat: apache-tomcat-8.5.45
+
+# TASK SECTION
+   tasks:
+     - name: To install dependency
+       yum:
+         name: "{{ java }}"
+         state: installed
+       when: ( ansible_distribution == "CentOS" and ansible_distribution_version == "7" )
+
+     - name: To install dependency
+       apt:
+         name: "{{ java }}"
+         state: installed
+       when:
+         ansible_distribution == "Ubuntu"
+
+     - name: To create a group
+       group:
+         name: tomcatadm
+         state: present
+
+     - name: To create a user
+       user:
+         name: tomcat
+         state: present
+         groups: tomcatadm
+
+     - name: to create a dir
+       file:
+         path: /opt/tomcat_logs
+         state: directory
+         mode: 0644
+         owner: tomcat
+         group: tomcatadm
+
+     - name: To download apache tomcat
+       get_url: 
+         url: "{{ url }}" 
+         mode: 0755
+         dest: /opt/{{ tomcat }}.tar.gz
+         backup: yes
+         timeout: 20
+         owner: tomcat
+         group: tomcatadm
+
+     - name: To untar and unzip the package
+       unarchive:
+         src: /opt/{{ tomcat }}.tar.gz
+         dest: /opt/
+         mode: 0755
+         remote_src: yes
+         owner: tomcat
+         group: tomcatadm
+       become_user: tomcat
+
+     - name: to fetch the server.xml file from remote servers
+       fetch:
+         src: /opt/apache-tomcat-8.5.45/conf/server.xml
+         dest: /opt/
+
+     - name: To update the apache tomcat config
+       copy:
+         src: /opt/server.xml
+         dest: /opt/apache-tomcat-8.5.45/conf/server.xml
+         owner: tomcat
+         group: tomcatadm
+       ignore_errors: yes
+
+     - name: To start apache tomcat
+       command: nohup /opt/apache-tomcat-8.5.45/bin/startup.sh &

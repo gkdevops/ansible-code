@@ -1,0 +1,9 @@
+---
+ - name: To exeucte the apache role
+   hosts: webservers
+   vars:
+     - apache_port: 8080
+     - apache_name: devops
+     - apache_user: apache
+   roles:
+     - apache

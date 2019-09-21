@@ -1,0 +1,24 @@
+---
+# HEADER SECTION
+ - name: This playbook will test forloop
+   hosts: webservers
+   vars:
+     myfiles: ['file1.txt', 'file2.txt', 'file3.txt', 'file4.txt']
+     mydir: ['devops', 'devops1']
+
+# TASK SECTION
+   tasks:
+     - name: To create 3 files
+       file:
+         path: /opt/{{ item }}
+         state: file
+         mode: 0600
+       with_items: "{{ myfiles }}"
+
+     - name: To create 2 directories
+       file:
+         path: /opt/{{ item }}
+         state: directory
+         mode: 0644
+         recurse: yes
+       with_items: "{{ mydir }}"

@@ -1,0 +1,18 @@
+---
+  - name: Provision an EC2 Instance
+    hosts: localhost
+    connection: local
+
+    tasks:
+      - ec2:
+          key_name: ibm
+          instance_type: t2.micro
+          region: us-east-1
+          image: ami-098bb5d92c8886ca1
+          wait: yes
+          group: allports
+          volumes:
+            - device_name: /dev/xvda
+              volume_type: gp2
+              volume_size: 8
+          count: 2

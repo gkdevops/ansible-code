@@ -1,0 +1,26 @@
+---
+
+# HEADER SECTION
+ - name: This playbook wiill install apache in rehat and ubuntu
+   hosts: webservers
+   gather_facts: True
+
+# TASK SECTION
+   tasks:
+     - name: Load redhat variables
+       include_vars: 
+         file: rhel_vars.yml
+       when: ansible_distribution == "CentOS"
+
+     - name: Load Ubuntu variables
+       include_vars:
+         file: ubuntu_vars.yml
+       when: ansible_distribution == "Ubuntu"
+  
+     - name: To load the redhat code
+       include_tasks: ubuntu_install.yml
+       when: ansible_distribution == "CentOS"
+
+     - name: To load the redhat code
+       include_tasks: ubuntu_install.yml
+       when: ansible_distribution == "Ubuntu"

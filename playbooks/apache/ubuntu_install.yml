@@ -1,0 +1,6 @@
+---
+
+ - name: To install apache web server
+   apt:
+     name: "{{ mypackage }}"
+     state: installed

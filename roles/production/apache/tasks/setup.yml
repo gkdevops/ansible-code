@@ -1,0 +1,25 @@
+---
+# This playbook will have the intial setup for my apache
+
+ - name: To create a group
+   group:
+     name: "{{ apache_group }}"
+     state: present
+
+ - name: To create a user
+   user:
+     name: "{{ apache_user }}"
+     state: present
+     groups: "{{ apache_group }}"
+
+ - name: to create a dir
+   file:
+     path: /opt/httpd_logs
+     state: directory
+     mode: 0644
+     owner: "{{ apache_user }}"
+     group: "{{ apache_group }}"
+
+ - name: To print the value
+   debug:
+     var: apache_name

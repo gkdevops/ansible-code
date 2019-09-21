@@ -1,0 +1,30 @@
+---
+# HEADER SECTION
+ - name: This playbook will restart ur system service
+   hosts: webservers
+
+# TASK SECTION
+   tasks:
+     - name: To print the facts collected
+       debug:
+         var: ansible_architecture
+
+     - name: To print the facts collected
+       debug:
+         var: ansible_default_ipv4.macaddress
+
+
+     - name: To print the facts collected
+       debug:
+         var: ansible_distribution
+
+
+     - name: To print the facts collected
+       debug:
+         var: ansible_hostname
+
+
+     - name: To print the facts collected
+       debug:
+         var: ansible_memtotal_mb
+

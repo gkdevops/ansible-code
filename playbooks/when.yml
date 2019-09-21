@@ -1,0 +1,34 @@
+---
+# This is my first playbook
+
+# HEADER SECTION
+ - name: This playbook will create a file
+   hosts: webservers
+   vars:
+     myname: Goutham
+     motd_value: "{{ lookup('file', '/etc/motd') }}"
+
+# TASK SECTION
+   tasks:
+     - debug:
+         msg: "motd value is {{ motd_value }}"
+
+     - name: To print the data inside the /etc/hosts
+       command: cat /etc/hosts
+       register: host_data
+
+     - name: To install vim if above command ran sucessfully
+       yum:
+         name: vim
+         state: installed
+       when: host_data.rc == 0
+
+     - name: To print the data inside the /etc/hosts
+       command: cat /opt/package
+       register: var_data
+
+     - name: To install "{{ var_data.stdout }}" if above command ran sucessfully
+       yum:
+         name: "{{ var_data.stdout }}"
+         state: absent
+

@@ -1,0 +1,16 @@
+---
+# to setup apache configuration
+
+ - name: To copy the data file from ansible server to remote servers
+   copy:
+     src: files/index.html
+     dest: /var/www/html
+     mode: 0644
+   notify: restart apache
+
+ - name: To copy my configuration template to remote servers
+   template:
+     src: templates/httpd.conf.j2
+     dest: /opt/httpd.conf
+     mode: 0644
+   notify: restart apache

@@ -1,0 +1,41 @@
+---
+# HEADER SECTION
+ - name: This playbook will restart ur system service
+   hosts: webservers
+   gather_facts: True
+
+# TASK SECTION
+   tasks:
+     - name: To Restart the service if its 64 bit
+       service:
+         name: sshd
+         state: restarted
+       when: ansible_architecture == "x86_64"
+
+     - name: OR statement
+       service:
+         name: sshd
+         state: restarted
+       when: ( ansible_distribution == "Ubuntu" or ansible_architecture == "x86_64" )
+
+     - name: AND statement
+       service:
+         name: sshd
+         state: restarted
+       when: ( ansible_distribution == "Ubuntu" and ansible_architecture == "x86_64" )
+
+     - name: To make sure the file is always present
+       file:
+         path: /opt/helloworld.html
+         state: file
+       when: 
+         - ansible_processor_cores >= 1
+         - ansible_distribution == "CentOS"
+
+     - name: To copy a file to all remote servers
+       copy:
+         src: /etc/ansible/ansible.cfg
+         dest: /opt/ansible.cfg
+         owner: jenkins
+         group: jenkins
+         mode: 0644

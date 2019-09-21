@@ -1,0 +1,17 @@
+---
+# This is my first playbook
+
+# HEADER SECTION
+ - name: This playbook will create a file
+   hosts: webservers
+
+# TASK SECTION
+   tasks:
+
+     - name: To install unzip
+       yum:
+         name: unzip
+         state: installed
+
+     - name: To create a folder using command module
+       command: mkdir -p /opt/ansible

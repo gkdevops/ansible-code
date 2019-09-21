@@ -1,0 +1,23 @@
+---
+# HEADER SECTION
+ - name: This playbook will restart ur system service
+   hosts: webservers
+
+# TASK SECTION
+   tasks:
+     - name: To restart a system service
+       service:
+         name: sshd
+         state: restarted
+
+     - name: To make sure the file is always present
+       file:
+         path: /opt/helloworld.html
+         state: file
+       ignore_errors: yes
+
+     - name: To copy a file to all remote servers
+       copy:
+         src: /etc/ansible/ansible.cfg
+         dest: /opt/ansible.cfg
+         mode: 0644

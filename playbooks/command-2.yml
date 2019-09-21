@@ -1,0 +1,32 @@
+---
+# This is my first playbook
+
+# HEADER SECTION
+ - name: This playbook will create a file
+   hosts: webservers
+   vars:
+     abc: Goutham
+# TASK SECTION
+   tasks:
+
+     - name: To print the value of the file inventory.txt
+       command: cat /opt/abc.txt
+       register: inv_out
+
+     - name: to print a value
+       debug:
+         var: inv_out
+
+     - name: to print a value
+       debug:
+         var: abc
+
+     - name: to print only value of rc
+       debug:
+         var: inv_out.rc
+
+     - name: To create a folder using the value of inv_out.rc
+       yum: 
+         name: "{{ item }}"
+         state: installed
+       with_items: "{{ inv_out.stdout_lines }}"
