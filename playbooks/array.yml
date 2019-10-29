@@ -3,8 +3,8 @@
  - name: This playbook will test forloop
    hosts: webservers
    vars:
-     myfiles: ['file1.txt', 'file2.txt', 'file3.txt', 'file4.txt']
-     mydir: ['devops', 'devops1']
+     myfiles: ['file1.txt', 'file2.txt']
+     mydir: ['webapp-1', 'webapp-2']
 
 # TASK SECTION
    tasks:
@@ -21,4 +21,9 @@
          state: directory
          mode: 0644
          recurse: yes
+         owner: ec2-user
+         group: ec2-user
        with_items: "{{ mydir }}"
+
+# Learn Ignore errors
+#       ignore_errors: yes

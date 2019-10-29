@@ -15,3 +15,7 @@
 
      - name: To create a folder using command module
        command: mkdir -p /opt/ansible
+# To make command module get desired state
+       args:
+         creates: /opt/ansible
+         chdir: /opt

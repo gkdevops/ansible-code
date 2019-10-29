@@ -18,4 +18,4 @@
      - name: To create a file named "{{ myfile }}"
        file:
          path: /opt/{{ myfile }}
-         state: touch
+         state: file

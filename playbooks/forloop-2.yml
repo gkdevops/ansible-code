@@ -1,12 +1,10 @@
 ---
 - hosts: localhost
-  sudo: yes
-
   vars:
     test1: "Hello World"
 
   tasks:
-    - name: Instlocalhost common software requirements
+    - name: Install common software requirements
       yum: name={{ item }} state=present
       with_items:
         - git
@@ -14,8 +12,6 @@
         - vim
 
 - hosts: localhost
-  sudo: yes
-
   vars:
     test1: "Hello World"
 
@@ -25,8 +21,6 @@
       when: item > 5
 
 - hosts: localhost
-  sudo: yes
-
   vars:
     test1: "Hello World"
 
@@ -36,13 +30,11 @@
       when: item > 5
 
 - hosts: localhost
-  sudo: yes
-
   vars:
     test1: "Hello World"
 
   tasks:
-    - name: Remove users �Chuck� and �Craig� from the system.
+    - name: Remove users Chuck and Craig from the system.
       user:
         name: "{{ item }}"
         state: absent

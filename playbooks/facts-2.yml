@@ -26,16 +26,17 @@
 
      - name: To make sure the file is always present
        file:
-         path: /opt/helloworld.html
+         path: /opt/abc.txt
          state: file
        when: 
          - ansible_processor_cores >= 1
-         - ansible_distribution == "CentOS"
+         - ansible_distribution == "RedHat"
 
      - name: To copy a file to all remote servers
        copy:
          src: /etc/ansible/ansible.cfg
          dest: /opt/ansible.cfg
-         owner: jenkins
-         group: jenkins
+         owner: root
+         group: root
          mode: 0644
+       when: ansible_memtotal_mb > 4096

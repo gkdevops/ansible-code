@@ -6,27 +6,37 @@
    hosts: webservers
    vars:
      abc: Goutham
+
 # TASK SECTION
    tasks:
-
      - name: To print the value of the file inventory.txt
        command: cat /opt/abc.txt
-       register: inv_out
+       register: output
 
-     - name: to print a value
+     - name: To print a value of a variable
        debug:
-         var: inv_out
+         var: output
 
-     - name: to print a value
+     - name: To print a value of a variable
        debug:
          var: abc
 
      - name: to print only value of rc
        debug:
-         var: inv_out.rc
+         var: output.rc
 
-     - name: To create a folder using the value of inv_out.rc
-       yum: 
+     - name: to print only value of stdout_lines
+       debug:
+         var: output.stdout_lines
+
+     - name: To Uninstall packages using the data from the Output of command module
+       yum:
          name: "{{ item }}"
          state: installed
-       with_items: "{{ inv_out.stdout_lines }}"
+       with_items: "{{ output.stdout_lines }}"
+
+     - name: To check whether my command module ran sucessfully or not
+       file:
+         path: /opt/sucess.txt
+         state: touch
+       when: output.rc == 1

@@ -2,6 +2,7 @@
 # HEADER SECTION
  - name: This playbook will restart ur system service
    hosts: webservers
+#   gather_facts: True
 
 # TASK SECTION
    tasks:
@@ -13,16 +14,13 @@
        debug:
          var: ansible_default_ipv4.macaddress
 
-
      - name: To print the facts collected
        debug:
          var: ansible_distribution
 
-
      - name: To print the facts collected
        debug:
          var: ansible_hostname
-
 
      - name: To print the facts collected
        debug:

@@ -9,9 +9,9 @@
        file:
          path: /opt/{{ item }}
          state: touch
-         mode: 0744
-         owner: centos
-         group: centos
+         mode: 0644
+         owner: ec2-user
+         group: root
        with_items:
          - file1.txt
          - file2.txt
@@ -19,7 +19,6 @@
 
      - name: To install 2 packages
        yum:
-         name: "{{ item }}"
 #         name: [u'unzip', u'wget']
          state: removed
        with_items:
