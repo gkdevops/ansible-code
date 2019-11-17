@@ -3,7 +3,7 @@
 
 # HEADER SECTION
  - name: This playbook will create a file
-   hosts: webservers
+   hosts: webservers-qa
 
 # TASK SECTION
    tasks:
