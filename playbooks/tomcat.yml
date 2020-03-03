@@ -7,8 +7,8 @@
    gather_facts: True
    vars:
      java: java-1.8.0-openjdk-devel
-     url: http://mirrors.estointernet.in/apache/tomcat/tomcat-8/v8.5.45/bin/apache-tomcat-8.5.45.tar.gz
-     tomcat: apache-tomcat-8.5.45
+     url: http://ftp.wayne.edu/apache/tomcat/tomcat-8/v8.5.51/bin/apache-tomcat-8.5.51.tar.gz
+     tomcat: apache-tomcat-8.5.51
 
 # TASK SECTION
    tasks:
@@ -16,7 +16,7 @@
        yum:
          name: "{{ java }}"
          state: installed
-       when: ( ansible_distribution == "CentOS" and ansible_distribution_version == "7" )
+       when: ( ansible_distribution == "RedHat" and ansible_distribution_major_version == "7" )
 
      - name: To install dependency
        apt:
@@ -66,16 +66,16 @@
 
      - name: to fetch the server.xml file from remote servers
        fetch:
-         src: /opt/apache-tomcat-8.5.45/conf/server.xml
+         src: /opt/apache-tomcat-8.5.51/conf/server.xml
          dest: /opt/
 
      - name: To update the apache tomcat config
        copy:
          src: /opt/server.xml
-         dest: /opt/apache-tomcat-8.5.45/conf/server.xml
+         dest: /opt/apache-tomcat-8.5.51/conf/server.xml
          owner: tomcat
          group: tomcatadm
        ignore_errors: yes
 
      - name: To start apache tomcat
-       command: nohup /opt/apache-tomcat-8.5.45/bin/startup.sh &
+       command: nohup /opt/apache-tomcat-8.5.51/bin/startup.sh &

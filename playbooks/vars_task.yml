@@ -7,9 +7,16 @@
 
 # TASK SECTION
    tasks:
-     - name: To install package named "{{ mypackage }}"
+     - name: To install package named "{{ value }}"
        yum:
-         name: "{{ mypackage }}"
+         name: "{{ value }}"
          state: absent
        vars:
-         mypackage: unzip
+         value: unzip
+
+     - name: To create a file named "{{ value }}"
+       file:
+         name: /opt/{{ value }}
+         state: file
+       vars:
+         value: helloworld.txt

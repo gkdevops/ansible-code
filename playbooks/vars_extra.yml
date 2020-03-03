@@ -7,7 +7,10 @@
 
 # TASK SECTION
    tasks:
-     - name: To install package named "{{ mysoftware }}"
-       yum:
-         name: "{{ mysoftware }}"
-         state: installed
+     - name: To Ensure abc.sh script runs every night at 01:15 AM
+       cron:
+         name: "Log Rotation"
+         hour: "01"
+         minute: "15"
+         job: /opt/{{ script }}
+

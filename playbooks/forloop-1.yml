@@ -19,7 +19,7 @@
 
      - name: To install 2 packages
        yum:
-#         name: [u'unzip', u'wget']
+         name: "{{ item }}"
          state: removed
        with_items:
          - wget

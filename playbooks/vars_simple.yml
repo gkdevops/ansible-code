@@ -2,11 +2,11 @@
 # This Playbook will define vairables and use them across the code
 
 # HEADER SECTION
- - name: This playbook will install a package and create a file
+ - name: This playbook will install a package and copy a file
    hosts: webservers
    vars:
      mypackage: vim
-     myfile: helloworld.txt
+     myfile: helloworld.yml
 
 # TASK SECTION
    tasks:
@@ -15,7 +15,9 @@
          name: "{{ mypackage }}"
          state: installed
 
-     - name: To create a file named "{{ myfile }}"
-       file:
-         path: /opt/{{ myfile }}
-         state: file
+     - name: To copy a file named "{{ myfile }}"
+       copy:
+         src: /opt/{{ myfile }}
+         dest: /opt/{{ myfile }}
+         mode: 0644
+         owner: ec2-user

@@ -3,17 +3,18 @@
  - name: This playbook will test forloop
    hosts: webservers
    vars:
-     myfiles: ['file1.txt', 'file2.txt']
+     myfiles: ['/opt/file1.txt', '/opt/file2.txt']
      mydir: ['webapp-1', 'webapp-2']
 
 # TASK SECTION
    tasks:
-     - name: To create 3 files
+     - name: To create 2 files
        file:
-         path: /opt/{{ item }}
+         path: "{{ item }}"
          state: file
          mode: 0600
        with_items: "{{ myfiles }}"
+       ignore_errors: yes
 
      - name: To create 2 directories
        file:

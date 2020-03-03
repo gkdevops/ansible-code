@@ -2,27 +2,27 @@
 # HEADER SECTION
  - name: This playbook will restart ur system service
    hosts: webservers
-#   gather_facts: True
+   gather_facts: true
 
 # TASK SECTION
    tasks:
-     - name: To print the facts collected
+     - name: To print the value of fact ansible_architecture
        debug:
          var: ansible_architecture
 
-     - name: To print the facts collected
+     - name: To print the value of fact ansible_default_ipv4.macaddress
        debug:
          var: ansible_default_ipv4.macaddress
 
-     - name: To print the facts collected
+     - name: To print the value of fact ansible_distribution
        debug:
          var: ansible_distribution
 
-     - name: To print the facts collected
+     - name: To print the value of fact ansible_hostname
        debug:
          var: ansible_hostname
 
-     - name: To print the facts collected
+     - name: To print the value of fact ansible_memtotal_mb
        debug:
          var: ansible_memtotal_mb
 

@@ -13,10 +13,14 @@
      - name: To print the variable data named myname
        debug:
          var: myname
+       tags:
+       - print1
 
      - name: To print the value of the vairable motd_value
        debug:
          msg: "motd value is {{ motd_value }}"
+       tags:
+       - print2
 
      - name: To print the data inside the /etc/hosts using command module and capture
        command: cat /etc/hosts
@@ -39,4 +43,4 @@
          name: tomcat
          state: present
          groups: wheel
-       when: host_data.rc == 128
+       when: host_data.rc == 0

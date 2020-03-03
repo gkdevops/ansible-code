@@ -1,0 +1,9 @@
+---
+ - name: This playbook will invoke the Ansible role
+   hosts: webservers
+   gather_facts: True
+   roles:
+     - apache
+   vars:
+     apache_name: Kelly
+     apache_port: 91
