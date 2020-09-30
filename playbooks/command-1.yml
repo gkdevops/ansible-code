@@ -9,13 +9,12 @@
    tasks:
 
      - name: To install unzip
-       yum:
+       apt:
          name: unzip
-         state: installed
+         state: absent
 
      - name: To create a folder using command module
-       command: mkdir -p /opt/ansible
-# To make command module get desired state
+       command: mkdir -p /opt/command
        args:
-         creates: /opt/ansible
+         creates: /opt/command
          chdir: /opt

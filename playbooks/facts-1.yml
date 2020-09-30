@@ -2,7 +2,7 @@
 # HEADER SECTION
  - name: This playbook will restart ur system service
    hosts: webservers
-   gather_facts: true
+   gather_facts: True
 
 # TASK SECTION
    tasks:

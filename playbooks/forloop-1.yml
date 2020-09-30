@@ -10,17 +10,14 @@
          path: /opt/{{ item }}
          state: touch
          mode: 0644
-         owner: ec2-user
-         group: root
+         owner: ubuntu
+         group: ubuntu
        with_items:
          - file1.txt
          - file2.txt
          - myfile.sh
 
      - name: To install 2 packages
-       yum:
-         name: "{{ item }}"
-         state: removed
-       with_items:
-         - wget
-         - unzip
+       apt:
+         name: ['wget', 'unzip']
+         state: present

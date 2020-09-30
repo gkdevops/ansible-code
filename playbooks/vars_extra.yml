@@ -12,5 +12,6 @@
          name: "Log Rotation"
          hour: "01"
          minute: "15"
-         job: /opt/{{ script }}
+         job: "/opt/{{ script }}"
+         state: present
 

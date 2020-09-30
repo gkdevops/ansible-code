@@ -6,24 +6,24 @@
    hosts: webservers
    gather_facts: True
    vars:
-     java: java-1.8.0-openjdk-devel
-     url: http://ftp.wayne.edu/apache/tomcat/tomcat-8/v8.5.51/bin/apache-tomcat-8.5.51.tar.gz
-     tomcat: apache-tomcat-8.5.51
+     java: openjdk-8-jdk
+     url: https://downloads.apache.org/tomcat/tomcat-8/v8.5.58/bin/apache-tomcat-8.5.58.tar.gz
+     tomcat: apache-tomcat-8.5.58
 
 # TASK SECTION
    tasks:
+     - name: To install java as its mandatory dependency
+       apt:
+         name: "{{ java }}"
+         state: present
+       when: ( ansible_distribution == "Ubuntu" and ansible_distribution_major_version == "18" )
+
      - name: To install dependency
        yum:
          name: "{{ java }}"
          state: installed
-       when: ( ansible_distribution == "RedHat" and ansible_distribution_major_version == "7" )
-
-     - name: To install dependency
-       apt:
-         name: "{{ java }}"
-         state: installed
        when:
-         ansible_distribution == "Ubuntu"
+         ansible_distribution == "RedHat"
 
      - name: To create a group
        group:
@@ -62,20 +62,19 @@
          remote_src: yes
          owner: tomcat
          group: tomcatadm
-       become_user: tomcat
 
      - name: to fetch the server.xml file from remote servers
        fetch:
-         src: /opt/apache-tomcat-8.5.51/conf/server.xml
+         src: /opt/apache-tomcat-8.5.58/conf/server.xml
          dest: /opt/
 
      - name: To update the apache tomcat config
        copy:
          src: /opt/server.xml
-         dest: /opt/apache-tomcat-8.5.51/conf/server.xml
+         dest: /opt/apache-tomcat-8.5.58/conf/server.xml
          owner: tomcat
          group: tomcatadm
        ignore_errors: yes
 
      - name: To start apache tomcat
-       command: nohup /opt/apache-tomcat-8.5.51/bin/startup.sh &
+       command: nohup /opt/apache-tomcat-8.5.58/bin/startup.sh &

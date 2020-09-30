@@ -6,18 +6,17 @@
    hosts: webservers
    vars:
      mypackage: vim
-     myfile: helloworld.yml
+     myfile: helloworld.yaml
 
 # TASK SECTION
    tasks:
      - name: To install package named "{{ mypackage }}"
-       yum:
+       apt:
          name: "{{ mypackage }}"
-         state: installed
+         state: present
 
      - name: To copy a file named "{{ myfile }}"
        copy:
          src: /opt/{{ myfile }}
          dest: /opt/{{ myfile }}
          mode: 0644
-         owner: ec2-user
