@@ -2,8 +2,8 @@
 # Install code for apache
 
  - name: To install Apache
-   yum:
+   apt:
      name: "{{ apache_package }}"
-     state: installed
+     state: present
    tags: 
    - install

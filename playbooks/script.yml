@@ -7,14 +7,10 @@
 
 # TASK SECTION
    tasks:
-
-     - name: To install unzip
-       apt:
-         name: unzip
-         state: absent
-
      - name: To create a folder using command module
-       command: mkdir -p /opt/command
+       script: /opt/abc.sh
        args:
-               #         creates: /opt/command
          chdir: /opt
+
+     - name: To reboot a machine
+       reboot:

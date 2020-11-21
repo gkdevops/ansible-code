@@ -2,15 +2,15 @@
 # This is my first playbook
 
 # HEADER SECTION
- - name: This playbook will create a file
+ - name: This play will create a file
    hosts: webservers
 
 # TASK SECTION
    tasks:
      - name: Creating a file called helloworld.html
        file:
-         path: /tmp/helloworld.html
-         state: touch
+         path: /opt/ansible
+         state: directory
          owner: root
          group: root
          mode: 0755

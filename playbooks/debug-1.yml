@@ -42,5 +42,5 @@
        user:
          name: tomcat
          state: present
-         groups: wheel
+         groups: ubuntu
        when: host_data.rc == 0

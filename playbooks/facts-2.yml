@@ -26,7 +26,7 @@
 
      - name: To make sure the file is always present
        file:
-         path: /opt/abc.txt
+         path: /opt/file1.txt
          state: file
        when: 
          - ansible_processor_cores >= 1
@@ -40,3 +40,8 @@
          group: root
          mode: 0644
        when: ansible_memtotal_mb >= 4096
+
+     - name: To use the data of the fact as a variable
+       file:
+         path: /opt/{{ ansible_distribution }}
+         state: touch

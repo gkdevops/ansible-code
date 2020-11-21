@@ -1,4 +1,4 @@
 ---
 # vars file for apache
 
-apache_package: httpd
+apache_package: apache2

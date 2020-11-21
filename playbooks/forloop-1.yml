@@ -12,12 +12,15 @@
          mode: 0644
          owner: ubuntu
          group: ubuntu
-       with_items:
+       loop:
          - file1.txt
          - file2.txt
          - myfile.sh
 
      - name: To install 2 packages
        apt:
-         name: ['wget', 'unzip']
+         name: "{{ item }}"
          state: present
+       loop:
+         - wget
+         - unzip

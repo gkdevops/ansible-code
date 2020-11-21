@@ -13,7 +13,7 @@
          path: "{{ item }}"
          state: file
          mode: 0600
-       with_items: "{{ myfiles }}"
+       loop: "{{ myfiles }}"
        ignore_errors: yes
 
      - name: To create 2 directories
@@ -24,7 +24,7 @@
          recurse: yes
          owner: ubuntu
          group: ubuntu
-       with_items: "{{ mydir }}"
+       loop: "{{ mydir }}"
 
 # Learn Ignore errors
 #       ignore_errors: yes
