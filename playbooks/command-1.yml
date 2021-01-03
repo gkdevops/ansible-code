@@ -7,7 +7,6 @@
 
 # TASK SECTION
    tasks:
-
      - name: To install unzip
        apt:
          name: unzip
@@ -16,5 +15,14 @@
      - name: To create a folder using command module
        command: mkdir -p /opt/command
        args:
-               #         creates: /opt/command
+         chdir: /opt
+
+     - name: To create a folder using command module
+       shell: cat /etc/hosts > /opt/ipaddress.txt
+       args:
+         chdir: /opt
+
+     - name: To create a folder using command module
+       script: /opt/myfile.sh
+       args:
          chdir: /opt

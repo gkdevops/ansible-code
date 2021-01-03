@@ -7,8 +7,8 @@
    gather_facts: True
    vars:
      java: openjdk-8-jdk
-     url: https://downloads.apache.org/tomcat/tomcat-8/v8.5.58/bin/apache-tomcat-8.5.58.tar.gz
-     tomcat: apache-tomcat-8.5.58
+     download_url: https://mirrors.estointernet.in/apache/tomcat/tomcat-8/v8.5.61/bin/apache-tomcat-8.5.61.tar.gz
+     tomcat: apache-tomcat-8.5.61
 
 # TASK SECTION
    tasks:
@@ -46,7 +46,7 @@
 
      - name: To download apache tomcat
        get_url: 
-         url: "{{ url }}" 
+         url: "{{ download_url }}" 
          mode: 0755
          dest: /opt/{{ tomcat }}.tar.gz
          backup: yes
@@ -65,16 +65,16 @@
 
      - name: to fetch the server.xml file from remote servers
        fetch:
-         src: /opt/apache-tomcat-8.5.58/conf/server.xml
+         src: /opt/apache-tomcat-8.5.61/conf/server.xml
          dest: /opt/
 
      - name: To update the apache tomcat config
        copy:
          src: /opt/server.xml
-         dest: /opt/apache-tomcat-8.5.58/conf/server.xml
+         dest: /opt/apache-tomcat-8.5.61/conf/server.xml
          owner: tomcat
          group: tomcatadm
        ignore_errors: yes
 
      - name: To start apache tomcat
-       command: nohup /opt/apache-tomcat-8.5.58/bin/startup.sh &
+       command: nohup /opt/apache-tomcat-8.5.61/bin/startup.sh &

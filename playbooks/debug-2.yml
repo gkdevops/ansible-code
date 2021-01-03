@@ -4,7 +4,6 @@
 # HEADER SECTION
  - name: This playbook will create a file
    hosts: webservers
-   gather_facts: true
    vars:
      - myname: Goutham
 
@@ -34,8 +33,12 @@
        debug:
          var: ansible_memtotal_mb
 
+     - name: To print the variable data
+       debug:
+         var: ansible_env.java_home
+
      - name: To install apache webserver in ubuntu
-       yum:
-         name: httpd
-         state: installed
-       when: ( ansible_distribution == "Ubuntu" or ansible_memtotal_mb > 900 )
+       apt:
+         name: apache2
+         state: present
+       when: ( ansible_distribution == "Ubuntu" and ansible_memtotal_mb > 1000 )

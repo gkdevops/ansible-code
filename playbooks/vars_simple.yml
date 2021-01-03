@@ -6,7 +6,7 @@
    hosts: webservers
    vars:
      mypackage: vim
-     myfile: helloworld.yml
+     myfile: helloworld.yaml
 
 # TASK SECTION
    tasks:
@@ -17,6 +17,6 @@
 
      - name: To copy a file named "{{ myfile }}"
        copy:
-         src: /opt/{{ myfile }}
+         src: "/opt/{{ myfile }}"
          dest: /opt/{{ myfile }}
          mode: 0644
