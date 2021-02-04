@@ -1,0 +1,19 @@
+---
+ - name: Deploy Tomcat Artifacts to Remote Servers
+   hosts: webservers
+
+   tasks:
+     - name: To stop apache tomcat
+       shell: ps -ef | grep tomcat | grep -v "grep" | awk '{print $2}'| xargs kill -9
+       ignore_errors: yes
+
+     - name: To Remove old war files
+       shell: rm -rf /opt/apache-tomcat-8.5/webapps/petclinic*
+
+     - name: To copy war file
+       copy:
+         src: /home/ubuntu/petclinic.war
+         dest: /opt/apache-tomcat-8.5.63/webapps/
+
+     - name: To START apache tomcat
+       shell: nohup /opt/apache-tomcat-8.5.63/bin/catalina.sh start

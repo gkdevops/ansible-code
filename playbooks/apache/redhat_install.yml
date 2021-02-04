@@ -3,4 +3,4 @@
  - name: To install apache web server
    yum:
      name: "{{ mypackage }}"
-     state: installed
+     state: present

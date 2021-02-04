@@ -14,7 +14,7 @@
          state: file
          mode: 0600
        loop: "{{ myfiles }}"
-       ignore_errors: yes
+       #       ignore_errors: yes
 
      - name: To create 2 directories
        file:

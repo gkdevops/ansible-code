@@ -2,7 +2,7 @@
 # This is my first playbook
 
 # HEADER SECTION
- - name: This playbook will create a file
+ - name: This playbook will install a package
    hosts: webservers
    vars_files:
      - myvariables.yml
@@ -10,6 +10,6 @@
 # TASK SECTION
    tasks:
      - name: To install package named "{{ mysoftware }}"
-       yum:
+       apt:
          name: "{{ mysoftware }}"
-         state: installed
+         state: present

@@ -2,7 +2,7 @@
 # This is my first playbook
 
 # HEADER SECTION
- - name: This playbook will run on webserevers
+ - name: This playbook will run on webservers
    hosts: webservers
 
 # TASK SECTION
@@ -17,7 +17,7 @@
 
 # HEADER SECTION
  - name: This playbook will run on DB Servers
-   hosts: db
+   hosts: database_dev
 
 # TASK SECTION
    tasks:
