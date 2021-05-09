@@ -17,7 +17,7 @@
 
 # HEADER SECTION
  - name: This playbook will run on DB Servers
-   hosts: database_dev
+   hosts: db
 
 # TASK SECTION
    tasks:

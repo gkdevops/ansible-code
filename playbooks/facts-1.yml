@@ -26,3 +26,6 @@
        debug:
          var: ansible_memtotal_mb
 
+     - name: To print the value of fact ansible_processor_cores
+       debug:
+         var: ansible_processor_cores

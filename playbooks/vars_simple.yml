@@ -6,7 +6,7 @@
    hosts: webservers
    vars:
      mypackage: vim
-     myfile: helloworld.yml
+     myfile: helloworld.yaml
 
 # TASK SECTION
    tasks:

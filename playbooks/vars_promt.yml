@@ -1,5 +1,6 @@
 ---
-- hosts: localhost
+- name: This playbook will show how to provide sensitive information at runtime
+  hosts: localhost
   vars_prompt:
     - name: "Version"
       prompt: "Which version Do you want to install?"

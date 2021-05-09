@@ -8,7 +8,7 @@
 # TASK SECTION
    tasks:
      - name: To install package named "{{ value }}"
-       yum:
+       package:
          name: "{{ value }}"
          state: absent
        vars:
@@ -17,6 +17,6 @@
      - name: To create a file named "{{ value }}"
        file:
          name: /opt/{{ value }}
-         state: file
+         state: touch
        vars:
          value: helloworld.txt

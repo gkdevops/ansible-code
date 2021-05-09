@@ -10,7 +10,7 @@
 # TASK SECTION
    tasks:
      - name: To execute the shell script myfile.sh and capture the output into output variable
-       script: /opt/myfile.sh
+       shell: cat /opt/list_packages
        register: capture_data
 
      - name: To print a value of a variable capture_data
@@ -29,8 +29,14 @@
        debug:
          var: capture_data.stdout_lines
 
+     - name: To install packages by reading the stdout_lines captured using register
+       package:
+         name: "{{ item }}"
+         state: present
+       loop: "{{ capture_data.stdout_lines }}"
+
      - name: To check whether my command module ran sucessfully or not
        file:
          path: /opt/sucess.txt
          state: touch
-       when: capture_data.rc == 0
+       when: capture_data.rc == 1
