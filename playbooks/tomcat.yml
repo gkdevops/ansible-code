@@ -6,21 +6,22 @@
    hosts: webservers
    gather_facts: True
    vars:
-     java: openjdk-8-jdk
-     download_url: https://downloads.apache.org/tomcat/tomcat-8/v8.5.65/bin/apache-tomcat-8.5.65.tar.gz
-     tomcat: apache-tomcat-8.5.65
+     java_apt: openjdk-8-jdk
+     java_yum: java-1.8.0-openjdk-devel
+     download_url: https://downloads.apache.org/tomcat/tomcat-8/v8.5.66/bin/apache-tomcat-8.5.66.tar.gz
+     tomcat: apache-tomcat-8.5.66
 
 # TASK SECTION
    tasks:
      - name: To install java as its mandatory dependency
        apt:
-         name: "{{ java }}"
+         name: "{{ java_apt }}"
          state: present
        when: ( ansible_distribution == "Ubuntu" and ansible_distribution_major_version == "18" )
 
      - name: To install dependency
        yum:
-         name: "{{ java }}"
+         name: "{{ java_yum }}"
          state: installed
        when:
          ansible_distribution == "RedHat"
@@ -65,16 +66,16 @@
 
      - name: to fetch the server.xml file from remote servers
        fetch:
-         src: /opt/apache-tomcat-8.5.65/conf/server.xml
+         src: "/opt/{{ tomcat }}/conf/server.xml"
          dest: /opt/
 
      - name: To update the apache tomcat config
        copy:
          src: /opt/server.xml
-         dest: /opt/apache-tomcat-8.5.65/conf/server.xml
+         dest: /opt/apache-tomcat-8.5.66/conf/server.xml
          owner: tomcat
          group: tomcatadm
        ignore_errors: yes
 
      - name: To start apache tomcat
-       command: nohup /opt/apache-tomcat-8.5.65/bin/startup.sh &
+       command: nohup /opt/apache-tomcat-8.5.66/bin/startup.sh &

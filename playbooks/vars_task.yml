@@ -7,16 +7,16 @@
 
 # TASK SECTION
    tasks:
-     - name: To install package named "{{ value }}"
+     - name: To install package named "{{ local_var }}"
        package:
-         name: "{{ value }}"
+         name: "{{ local_var }}"
          state: absent
        vars:
-         value: unzip
+         local_var: unzip
 
-     - name: To create a file named "{{ value }}"
+     - name: To create a file named "{{ local_var }}"
        file:
-         name: /opt/{{ value }}
+         name: /opt/{{ local_var }}
          state: touch
        vars:
-         value: helloworld.txt
+         local_var: helloworld.txt

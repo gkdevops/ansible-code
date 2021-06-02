@@ -10,6 +10,6 @@
 # TASK SECTION
    tasks:
      - name: To install package named "{{ mysoftware }}"
-       apt:
+       package:
          name: "{{ mysoftware }}"
          state: present

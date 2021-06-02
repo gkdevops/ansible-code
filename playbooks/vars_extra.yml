@@ -14,4 +14,3 @@
          minute: "15"
          job: "/opt/{{ script }}"
          state: present
-

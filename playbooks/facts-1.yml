@@ -3,9 +3,15 @@
  - name: This playbook will restart ur system service
    hosts: webservers
    gather_facts: True
+   vars:
+     myname: Goutham
 
 # TASK SECTION
    tasks:
+     - name: To print the value of variable myname
+       debug:
+         var: myname
+
      - name: To print the value of fact ansible_architecture
        debug:
          var: ansible_architecture

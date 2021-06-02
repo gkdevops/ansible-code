@@ -10,15 +10,15 @@
          path: /opt/{{ item }}
          state: touch
          mode: 0644
-         owner: ubuntu
-         group: ubuntu
+         owner: ec2-user
+         group: ec2-user
        loop:
          - file1.txt
          - file2.txt
          - myfile.sh
 
      - name: To install 2 packages
-       apt:
+       package:
          name: "{{ item }}"
          state: present
        loop:

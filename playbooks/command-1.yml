@@ -7,22 +7,18 @@
 
 # TASK SECTION
    tasks:
-     - name: To install unzip
-       apt:
-         name: unzip
-         state: absent
-
      - name: To create a folder using command module
        command: mkdir -p /opt/command
        args:
          chdir: /opt
+         creates: /opt/command
 
-     - name: To create a folder using command module
-       shell: cat /etc/hosts > /opt/ipaddress.txt
+     - name: To redirect the contents of hosts file to ipaddress.txt
+       shell: cat /etc/hosts > ipaddress.txt
        args:
          chdir: /opt
 
-     - name: To create a folder using command module
-       script: /opt/myfile.sh
+     - name: To excute a shell script on the remote machine
+       script: myfile.sh
        args:
          chdir: /opt

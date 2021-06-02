@@ -1,0 +1,38 @@
+---
+# This is my first playbook
+
+# HEADER SECTION
+ - name: This playbook will create a file
+   hosts: webservers
+   vars:
+     abc: Goutham
+
+# TASK SECTION
+   tasks:
+     - name: To execute the shell script myfile.sh and capture the output into output variable
+       shell: cat /opt/packages
+       register: capture_data
+
+     - name: To print a value of a variable capture_data
+       debug:
+         var: capture_data
+
+     - name: to print only value of rc in capture_data variable
+       debug:
+         var: capture_data.rc
+
+     - name: to print only value of stdout_lines in capture_data variable
+       debug:
+         var: capture_data.stdout_lines
+
+     - name: To install packages by reading the stdout_lines captured using register
+       package:
+         name: "{{ item }}"
+         state: present
+       loop: "{{ capture_data.stdout_lines }}"
+
+     - name: To check whether my command module ran sucessfully or not
+       file:
+         path: /opt/sucess.txt
+         state: touch
+       when: capture_data.rc == 0

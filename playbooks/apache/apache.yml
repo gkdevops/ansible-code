@@ -10,7 +10,7 @@
      - name: Load redhat variables
        include_vars: 
          file: rhel_vars.yml
-       when: ansible_distribution == "CentOS"
+       when: ansible_distribution == "RedHat"
 
      - name: Load Ubuntu variables
        include_vars:
@@ -18,9 +18,9 @@
        when: ansible_distribution == "Ubuntu"
   
      - name: To load the redhat code
-       include_tasks: ubuntu_install.yml
-       when: ansible_distribution == "CentOS"
+       include_tasks: rhel_install.yml
+       when: ansible_distribution == "RedHat"
 
-     - name: To load the redhat code
+     - name: To load the Ubuntu code
        include_tasks: ubuntu_install.yml
        when: ansible_distribution == "Ubuntu"
