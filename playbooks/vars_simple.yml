@@ -11,12 +11,14 @@
 # TASK SECTION
    tasks:
      - name: To install package named "{{ mypackage }}"
-       yum:
+       package:
          name: "{{ mypackage }}"
          state: present
 
      - name: To copy a file named "{{ myfile }}"
        copy:
          src: "/opt/{{ myfile }}"
-         dest: /opt/{{ myfile }}
+         dest: "/opt/{{ myfile }}"
          mode: 0644
+         owner: ubuntu
+         group: ubuntu

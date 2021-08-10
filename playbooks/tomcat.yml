@@ -8,8 +8,8 @@
    vars:
      java_apt: openjdk-8-jdk
      java_yum: java-1.8.0-openjdk-devel
-     download_url: https://downloads.apache.org/tomcat/tomcat-8/v8.5.66/bin/apache-tomcat-8.5.66.tar.gz
-     tomcat: apache-tomcat-8.5.66
+     download_url: https://mirrors.estointernet.in/apache/tomcat/tomcat-8/v8.5.69/bin/apache-tomcat-8.5.69.tar.gz
+     tomcat: apache-tomcat-8.5.69
 
 # TASK SECTION
    tasks:
@@ -39,7 +39,7 @@
 
      - name: to create a dir
        file:
-         path: /opt/tomcat_logs
+         path: /opt/tomcat_backup
          state: directory
          mode: 0644
          owner: tomcat
@@ -72,10 +72,10 @@
      - name: To update the apache tomcat config
        copy:
          src: /opt/server.xml
-         dest: /opt/apache-tomcat-8.5.66/conf/server.xml
+         dest: /opt/apache-tomcat-8.5.69/conf/server.xml
          owner: tomcat
          group: tomcatadm
        ignore_errors: yes
 
      - name: To start apache tomcat
-       command: nohup /opt/apache-tomcat-8.5.66/bin/startup.sh &
+       command: nohup /opt/apache-tomcat-8.5.69/bin/startup.sh &

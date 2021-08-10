@@ -19,6 +19,7 @@
          chdir: /opt
 
      - name: To excute a shell script on the remote machine
-       script: myfile.sh
+       script: 
+         cmd: myfile.sh
        args:
          chdir: /opt

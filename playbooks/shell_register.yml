@@ -1,5 +1,5 @@
 ---
-- name: Run the playbook on the local ansible controller
+- name: Run the playbook on the local ansible controller server
   hosts: localhost
   tasks:
   - name: Ansible register variable basic example

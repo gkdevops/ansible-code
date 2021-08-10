@@ -22,7 +22,7 @@
        service:
          name: sshd
          state: restarted
-       when: ( ansible_distribution == "Ubuntu" and ansible_architecture == "x86_64" )
+       when: ( ansible_distribution == "RedHat" and ansible_architecture == "x86_64" )
 
      - name: To make sure the file is always present
        file:
