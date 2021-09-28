@@ -1,0 +1,13 @@
+---
+# HEADER SECTION
+ - name: This playbook will test forloop
+   hosts: webservers
+
+# TASK SECTION
+   tasks:
+     - name: To install 5 packages
+       package:
+         name: "{{ item }}"
+         state: present
+         update_cache: yes
+       loop: "{{ packages }}"

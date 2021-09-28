@@ -1,0 +1,19 @@
+---
+ - name: To install node js ltm version
+   hosts: localhost
+
+   tasks:
+     - name: Add apt key for the OS to trus the nodejs installation source location
+       apt_key:
+         url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+
+     - name: To Add the nodejs download location
+       apt_repository:
+         repo: deb https://deb.nodesource.com/node_13.x bionic main
+         update_cache: yes
+
+     - name: "Install NodeJS"
+       apt:
+         name: nodejs
+         state: latest
+         update_cache: yes

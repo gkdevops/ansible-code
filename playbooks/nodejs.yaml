@@ -1,0 +1,73 @@
+---
+ - name: To download code, install dependencies, deploy code
+   hosts: localhost
+   vars:
+     repo_url: https://github.com/ahfarmer/calculator.git
+
+   tasks:
+
+     - name: download code from github
+       git:
+         repo: "{{ repo_url }}"
+         dest: /opt/calculator
+         accept_hostkey: yes
+         force: yes
+       tags:
+       - build
+
+     - name: to install dependencies
+       npm:
+         path: /opt/calculator
+         state: present
+       tags:
+       - build
+
+     - name: to build the code
+       command: npm run build
+       args:
+         chdir: /opt/calculator
+       tags:
+       - build
+       register: build_output
+
+     - name: to print the output captured in build phase
+       debug:
+         var: build_output
+       tags:
+       - build
+
+ - name: This code will execute in my remote machines
+   hosts: webservers
+
+   tasks:
+     - name: Install nginx webserver
+       package:
+         name: "{{ item }}"
+         state: present
+       loop:
+         - nginx
+         - curl
+         - git
+       tags:
+       - deploy
+
+     - name: Clear the web server static directory
+       file:
+         path: /var/www/html/
+         state: absent
+       tags:
+       - deploy
+
+     - name: To copy the built code and deploy to nginx
+       copy:
+         src: /opt/calculator/build/
+         dest: /var/www/html/
+       tags:
+       - deploy
+
+     - name: start nginx web servers
+       service:
+         name: nginx
+         state: started
+       tags:
+       - deploy
