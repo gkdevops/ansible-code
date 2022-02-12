@@ -1,0 +1,13 @@
+---
+  - name: Docker container create activity
+    hosts: webservers
+
+
+    tasks:
+      - name: Create a nodejs docker container
+        docker_container:
+          name: myweb-01
+          image: httpd:latest
+          exposed_ports:
+            - 20000
+          state: started

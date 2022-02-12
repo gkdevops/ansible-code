@@ -1,0 +1,14 @@
+---
+ - name: To download code, install dependencies, deploy code
+   hosts: webservers
+   vars:
+     repo_url: https://github.com/ahfarmer/calculator.git
+
+   tasks:
+
+     - name: download code from github
+       git:
+         repo: "{{ repo_url }}"
+         dest: /opt/calculator
+         accept_hostkey: yes
+         force: yes

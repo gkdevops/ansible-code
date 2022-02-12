@@ -1,0 +1,32 @@
+---
+ - name: Perform Docker Image operations
+   hosts: webservers
+
+   tasks:
+
+     - name: Install Docker
+       package:
+         name: "{{ item }}"
+         state: present
+       loop:
+         - docker
+         - python3-pip
+         - python-pip
+
+     - name: Install Docker library for python
+       command: pip install docker-py
+
+     - name: Start Dokcer daemon
+       service:
+         name: docker
+         state: started
+
+     - name: pull an image
+       docker_image:
+         name: node:latest
+
+     - name: Remove image
+       docker_image:
+         state: absent
+         name: node
+         tag: latest

@@ -26,9 +26,7 @@
          var: capture_data.stdout_lines
 
      - name: To install packages by reading the stdout_lines captured using register
-       package:
-         name: "{{ item }}"
-         state: present
+       command: "{{ item }}"
        loop: "{{ capture_data.stdout_lines }}"
 
      - name: To check whether my command module ran sucessfully or not

@@ -1,0 +1,21 @@
+---
+# This is my first playbook
+
+# HEADER SECTION
+ - name: This playbook will create a file
+   hosts: webservers
+   vars:
+     my_command:  "{{ lookup('file', '/opt/packages') }}" 
+
+# TASK SECTION
+   tasks:
+
+     - name: To install packages by reading the stdout_lines captured using register
+       command: "{{ item }}"
+       loop: "{{ my_command }}"
+
+     - name: To check whether my command module ran sucessfully or not
+       file:
+         path: /opt/sucess.txt
+         state: touch
+       when: capture_data.rc == 0

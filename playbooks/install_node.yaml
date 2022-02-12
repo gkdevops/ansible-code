@@ -1,6 +1,6 @@
 ---
  - name: To install node js ltm version
-   hosts: localhost
+   hosts: webservers
 
    tasks:
      - name: Add apt key for the OS to trus the nodejs installation source location

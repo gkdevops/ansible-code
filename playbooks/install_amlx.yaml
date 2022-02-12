@@ -1,0 +1,10 @@
+---
+ - name: To install node js through nvm
+   hosts: webservers
+
+   tasks:
+     - name: Install nvm manager
+       shell: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+
+     - name: Install npm using the nvm manager
+       shell: . ~/.nvm/nvm.sh ; nvm install node
