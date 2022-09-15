@@ -8,34 +8,35 @@
    vars:
      java_apt: openjdk-8-jdk
      java_yum: java-1.8.0-openjdk-devel
-     download_url: https://mirrors.estointernet.in/apache/tomcat/tomcat-8/v8.5.69/bin/apache-tomcat-8.5.69.tar.gz
-     tomcat: apache-tomcat-8.5.69
+     download_url: https://dlcdn.apache.org/tomcat/tomcat-8/v8.5.82/bin/apache-tomcat-8.5.82.tar.gz
+     tomcat: apache-tomcat-8.5.82
+     group_name: tomcatadm
 
 # TASK SECTION
    tasks:
-     - name: To install java as its mandatory dependency
+     - name: To install java on Ubuntu as its mandatory dependency
        apt:
          name: "{{ java_apt }}"
          state: present
        when: ( ansible_distribution == "Ubuntu" and ansible_distribution_major_version == "18" )
 
-     - name: To install dependency
+     - name: To install java on EL Linux as its mandatory dependency
        yum:
          name: "{{ java_yum }}"
          state: installed
        when:
-         ansible_distribution == "RedHat"
+         ansible_distribution == "Amazon"
 
      - name: To create a group
        group:
-         name: tomcatadm
+         name: "{{ group_name }}"
          state: present
 
      - name: To create a user
        user:
          name: tomcat
          state: present
-         groups: tomcatadm
+         groups: "{{ group_name }}"
 
      - name: to create a dir
        file:
@@ -43,7 +44,7 @@
          state: directory
          mode: 0644
          owner: tomcat
-         group: tomcatadm
+         group: "{{ group_name }}"
 
      - name: To download apache tomcat
        get_url: 
@@ -72,10 +73,10 @@
      - name: To update the apache tomcat config
        copy:
          src: /opt/server.xml
-         dest: /opt/apache-tomcat-8.5.69/conf/server.xml
+         dest: /opt/apache-tomcat-8.5.82/conf/server.xml
          owner: tomcat
          group: tomcatadm
        ignore_errors: yes
 
      - name: To start apache tomcat
-       command: nohup /opt/apache-tomcat-8.5.69/bin/startup.sh &
+       command: nohup /opt/apache-tomcat-8.5.82/bin/startup.sh &

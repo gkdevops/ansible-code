@@ -1,5 +1,5 @@
 ---
-# This is my first playbook
+# This playbook helps understnd the register parameter
 
 # HEADER SECTION
  - name: This playbook will capture the output of a module execution

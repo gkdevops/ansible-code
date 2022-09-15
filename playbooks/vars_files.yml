@@ -10,6 +10,5 @@
 # TASK SECTION
    tasks:
      - name: To install package named "{{ mysoftware }}"
-       apt:
+       yum:
          name: "{{ mysoftware }}"
-         state: present

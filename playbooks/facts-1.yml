@@ -2,7 +2,6 @@
 # HEADER SECTION
  - name: This playbook will restart ur system service
    hosts: webservers
-   gather_facts: True
    vars:
      myname: Goutham
 
@@ -35,3 +34,7 @@
      - name: To print the value of fact ansible_processor_cores
        debug:
          var: ansible_processor_cores
+
+     - name: To print the value of fact ansible_pkg_mgr
+       debug:
+         var: ansible_pkg_mgr

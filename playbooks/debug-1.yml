@@ -1,12 +1,12 @@
 ---
-# This is my first playbook
+# This module helps to understand debug module and lookup plugins.
 
 # HEADER SECTION
  - name: This playbook will create a file
    hosts: webservers
    vars:
      myname: Goutham
-     motd_value: "{{ lookup('file', '/etc/motd') }}"
+     motd_value: "{{ lookup('file', '/opt/motd') }}"
 
 # TASK SECTION
    tasks:

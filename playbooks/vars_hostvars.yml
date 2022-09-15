@@ -4,19 +4,12 @@
 # HEADER SECTION
  - name: This play will install a package and copy a file
    hosts: webservers
-   vars:
-     mypackage: vim
-     myfile: helloworld.yaml
 
 # TASK SECTION
    tasks:
-     - package:
-         name: "{{ mypackage }}"
-         state: present
-
-     - copy:
-         src: "/opt/{{ myfile }}"
-         dest: "/opt/{{ myfile }}"
+     - file:
+         name: "/opt/{{ file_name }}"
          mode: 0644
          owner: tomcat
          group: tomcat
+         state: touch

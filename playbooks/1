@@ -6,7 +6,7 @@
    hosts: webservers
 
 # TASK SECTION
-   tasks:
+  tasks:
      - name: Creating a file called helloworld.html
        file:
          path: /opt/ansible
@@ -14,4 +14,4 @@
          owner: root
          group: root
          mode: 0755
-         recurse: yes
+         recursive: yes

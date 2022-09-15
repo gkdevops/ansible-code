@@ -1,0 +1,11 @@
+[webservers]
+ip-172-31-9-174.ec2.internal
+ip-172-31-15-78.ec2.internal
+
+[appservers]
+ip-172-31-9-174.ec2.internal
+ip-172-31-15-78.ec2.internal
+
+[database]
+ip-172-31-9-174.ec2.internal
+ip-172-31-15-78.ec2.internal

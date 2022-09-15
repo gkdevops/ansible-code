@@ -1,5 +1,5 @@
 ---
-# This is my first playbook
+# This playbook will help understand the command, shell and script modules
 
 # HEADER SECTION
  - name: This playbook will create a file
@@ -8,7 +8,7 @@
 # TASK SECTION
    tasks:
      - name: To create a folder using command module
-       command: mkdir -p /opt/command
+       command: mkdir -p command
        args:
          chdir: /opt
          creates: /opt/command
@@ -16,10 +16,9 @@
      - name: To redirect the contents of hosts file to ipaddress.txt
        shell: cat /etc/hosts > ipaddress.txt
        args:
-         chdir: /opt
+         chdir: /tmp
 
      - name: To excute a shell script on the remote machine
-       script: 
-         cmd: myfile.sh
+       script: myfile.sh
        args:
          chdir: /opt

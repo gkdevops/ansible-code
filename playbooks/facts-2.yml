@@ -22,7 +22,7 @@
        service:
          name: sshd
          state: restarted
-       when: ( ansible_distribution == "RedHat" and ansible_architecture == "x86_64" )
+       when: ( ansible_distribution == "Ubuntu" and ansible_architecture == "x86_64" )
 
      - name: To make sure the file is always present
        file:
@@ -30,7 +30,7 @@
          state: file
        when: 
          - ansible_processor_cores >= 1
-         - ansible_distribution == "RedHat"
+         - ansible_distribution == "Amazon"
 
      - name: To copy a file to all remote servers
        copy:

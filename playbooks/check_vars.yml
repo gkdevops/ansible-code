@@ -12,7 +12,7 @@
 
    tasks:
      - name: Checking that required variables are set
-       fail: msg="This specific {{ item }} is not defined, please ensure to define this specific {{ item }}."
+       fail: msg="This variable {{ item }} is not defined, please ensure to define the variable {{ item }}."
        when: item not in vars
        loop:
          - database

@@ -13,4 +13,4 @@
          hour: "01"
          minute: "15"
          job: "/opt/{{ script }}"
-         state: present
+         state: absent
