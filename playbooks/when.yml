@@ -1,21 +1,23 @@
 ---
-# This is my first playbook
+# This is playbook to understand register, command and read the output of register
 
 # HEADER SECTION
  - name: This playbook will create a file
    hosts: webservers
-   vars:
-     myname: Goutham
-     motd_value: "{{ lookup('file', '/etc/motd') }}"
 
 # TASK SECTION
    tasks:
-     - debug:
-         msg: "motd value is {{ motd_value }}"
-
      - name: To print the data inside the /etc/hosts
        command: cat /etc/hosts
        register: host_data
+
+     - name: To print the data inside host_data variable
+       debug:
+         var: host_data
+
+     - name: To print the data inside host_data variable only for return code
+       debug:
+         var: host_data.rc
 
      - name: To install vim if above command ran sucessfully
        yum:
@@ -27,8 +29,12 @@
        command: cat /opt/package
        register: var_data
 
-     - name: To install "{{ var_data.stdout }}" if above command ran sucessfully
-       yum:
-         name: "{{ var_data.stdout }}"
-         state: absent
+     - name: To print the data inside var_data variable
+       debug:
+         var: var_data
 
+     - name: To install "{{ var_data.stdout_lines }}" if above command ran sucessfully
+       yum:
+         name: "{{ var_data.stdout_lines }}"
+         state: present
+       when: var_data.rc == 0
