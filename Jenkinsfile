@@ -34,6 +34,18 @@ stages {
     }
   }
   
+  stage('Approval Step')
+    steps {
+                input {
+                message "Ready to deploy?"
+                ok "Yes"
+                parameters {
+                    string(name: "DEPLOY_ENV", defaultValue: "production")
+                }
+            }
+    }
+  }
+ 
   stage('deploy ansible') {
     steps {
         ansiblePlaybook colorized: true, installation: 'ANSIBLE29', playbook: 'playbooks/helloworld.yml'
