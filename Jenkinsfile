@@ -34,7 +34,7 @@ stages {
     }
   }
   
-  stage('Approval Step')
+  stage('Approval Step') {
     steps {
                 input {
                 message "Ready to deploy?"
