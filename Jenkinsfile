@@ -12,8 +12,20 @@ options {
 }
 
 triggers {
-  cron '00 2 * * *'
-}
+        GenericTrigger(
+            genericVariables: [
+                [key: 'actor', value: '$.repository.owner.name'],
+                [key: 'branch', value: '$.ref']
+            ],
+            token: 'ansible-1',
+            printContributedVariables: true,
+            printPostContent: false,
+            silentResponse: false,
+            regexpFilterText: '$branch',
+            regexpFilterExpression: 'refs/heads/' + BRANCH_NAME
+
+        )
+ }
 
 stages {
   stage('checkout code') {
