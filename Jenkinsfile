@@ -36,6 +36,7 @@ stages {
   
   stage('Approval Step') {
     steps {
+      script {
                 input {
                 message "Ready to deploy?"
                 ok "Yes"
@@ -43,6 +44,7 @@ stages {
                     string(name: "DEPLOY_ENV", defaultValue: "production")
                 }
             }
+      }
     }
   }
  
