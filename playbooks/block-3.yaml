@@ -1,0 +1,28 @@
+---
+ - name: This playbook provides an example of block + rescue
+   hosts: webservers
+   gather_facts: True
+
+   tasks:
+     - name: Install and start Apache
+       block:
+         - name: Install httpd and memcached
+           ansible.builtin.yum:
+             name: httpd
+             state: present
+
+         - name: Start service bar and enable it
+           ansible.builtin.service:
+             name: httpd
+             state: started
+             enabled: True
+       rescue:
+         - name: Prints only when error occurs
+           ansible.builtin.debug:
+             msg: 'I caught an error as part of Apache Install and Start block, please check and fix it, :-)'
+       always:
+         - name: Always runs this block
+           ansible.builtin.debug:
+             msg: "This task always executes, :-)"
+
+       when: ansible_facts['distribution'] == 'Amazon'

@@ -1,0 +1,20 @@
+---
+ - name: This playbook provides an example of a simple block
+   hosts: webservers
+   gather_facts: True
+
+   tasks:
+     - name: Install and start Apache
+       block:
+         - name: Install httpd and memcached
+           ansible.builtin.yum:
+             name: httpd
+             state: present
+
+         - name: Start service bar and enable it
+           ansible.builtin.service:
+             name: httpd
+             state: started
+             enabled: True
+       when: ansible_facts['distribution'] == 'Amazon'
+       ignore_errors: yes

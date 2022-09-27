@@ -1,0 +1,15 @@
+---
+# HEADER SECTION
+ - name: This playbook will test forloop
+   hosts: webservers
+
+# TASK SECTION
+   tasks:
+     - name: To create 3 files
+       file:
+         path: /opt/{{ item }}
+         state: file
+         owner: root
+         group: root
+       loop:
+         - abc.txt

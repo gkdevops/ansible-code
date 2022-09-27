@@ -17,7 +17,7 @@
 
 # HEADER SECTION
  - name: This playbook will run on DB Servers
-   hosts: db
+   hosts: database
 
 # TASK SECTION
    tasks:

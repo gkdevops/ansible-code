@@ -1,0 +1,11 @@
+
+PLAY [This playbook will test forloop] ***********************************************************************************************************************
+
+TASK [To create 3 files] *************************************************************************************************************************************
+failed: [ip-172-31-15-78.ec2.internal] (item=abc.txt) => {"ansible_facts": {"discovered_interpreter_python": "/usr/bin/python"}, "ansible_loop_var": "item", "changed": false, "item": "abc.txt", "msg": "file (/opt/abc.txt) is absent, cannot continue", "path": "/opt/abc.txt", "state": "absent"}
+ok: [ip-172-31-9-174.ec2.internal] => (item=abc.txt)
+
+PLAY RECAP ***************************************************************************************************************************************************
+ip-172-31-15-78.ec2.internal : ok=0    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+ip-172-31-9-174.ec2.internal : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+

@@ -28,9 +28,8 @@ triggers {
  }
 
 stages {
-  stage('checkout code') {
+  stage('Pre-requisities') {
     steps {
-      git 'https://github.com/gkdevops/ansible-code.git'
       sh "env"
     }
   }
@@ -53,8 +52,15 @@ stages {
  
   stage('deploy ansible') {
     steps {
-        ansiblePlaybook colorized: true, installation: 'ANSIBLE29', playbook: 'playbooks/helloworld.yml'
+      withCredentials([string(credentialsId: 'vault-credentials', variable: 'password')]) {
+        sh ("echo $password > vault-password.txt ; ansible-playbook playbooks/vault-1.yml --vault-password vault-password.txt")
+      }
     }
   } 
 }
+      post { 
+        always { 
+            sh "rm -f vault-password.txt"
+        }
+    }
 }
