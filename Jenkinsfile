@@ -58,4 +58,9 @@ stages {
     }
   } 
 }
+      post { 
+        always { 
+            sh "rm -f vault-password.txt"
+        }
+    }
 }
