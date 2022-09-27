@@ -28,9 +28,8 @@ triggers {
  }
 
 stages {
-  stage('checkout code') {
+  stage('Pre-requisities') {
     steps {
-      git 'https://github.com/gkdevops/ansible-code.git'
       sh "env"
     }
   }
