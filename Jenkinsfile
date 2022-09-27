@@ -31,9 +31,26 @@ stages {
   stage('checkout code') {
     steps {
       git 'https://github.com/gkdevops/ansible-code.git'
+      sh "env"
     }
   }
   
+       stage('Approve Update') {
+            steps {
+                script {
+                    if( params.BRANCH_NAME == 'master' ){
+                        timeout(time: 3, unit: 'DAYS') {
+                            input(message: 'Update Image?', parameters: [
+                                [$class: 'TextParameterDefinition', defaultValue: params.BRANCH_NAME, description: '', name: 'env'],
+                            ])
+                        }
+                    } else {
+                        echo "Environment ${params.environment} does not require an approval"
+                    }
+                }
+            }
+        }
+ 
   stage('deploy ansible') {
     steps {
         ansiblePlaybook colorized: true, installation: 'ANSIBLE29', playbook: 'playbooks/helloworld.yml'
