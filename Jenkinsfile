@@ -53,7 +53,9 @@ stages {
  
   stage('deploy ansible') {
     steps {
-        ansiblePlaybook colorized: true, installation: 'ANSIBLE29', playbook: 'playbooks/helloworld.yml'
+      withCredentials([string(credentialsId: 'vault-credentials', variable: 'vault-password')]) {
+        sh "echo "$vault-password" > vaulr-password.txt ; ansiblePlaybook colorized: true, installation: 'ANSIBLE29', playbook: 'playbooks/vault-1.yml --vault-password vault-passowrd.txt'"
+      }
     }
   } 
 }
