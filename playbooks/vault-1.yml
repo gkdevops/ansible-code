@@ -1,0 +1,10 @@
+---
+ - name: vault example
+   hosts: webservers
+   vars_files:
+     - /root/mysecrets.yml
+
+   tasks:
+     - name: display password
+       debug:
+         var: db_password

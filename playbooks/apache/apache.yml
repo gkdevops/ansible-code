@@ -10,7 +10,7 @@
      - name: Load redhat variables
        include_vars: 
          file: rhel_vars.yml
-       when: ansible_distribution == "RedHat"
+       when: ansible_distribution == "Amazon"
 
      - name: Load Ubuntu variables
        include_vars:
@@ -19,7 +19,7 @@
   
      - name: To load the redhat code
        include_tasks: rhel_install.yml
-       when: ansible_distribution == "RedHat"
+       when: ansible_distribution == "Amazon"
 
      - name: To load the Ubuntu code
        include_tasks: ubuntu_install.yml

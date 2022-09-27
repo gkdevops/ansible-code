@@ -1,6 +1,10 @@
 ---
-
  - name: To install apache web server
    yum:
      name: "{{ mypackage }}"
      state: present
+
+ - name: To start apache web server
+   service:
+     name: httpd
+     state: started

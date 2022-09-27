@@ -1,0 +1,23 @@
+---
+# This Playbook will define vairables and use them across the code
+
+# HEADER SECTION
+ - name: This play will install a package and copy a file
+   hosts: webservers
+   strategy: free
+   vars:
+     mypackage: vim
+     myfile: helloworld.yaml
+
+# TASK SECTION
+   tasks:
+     - package:
+         name: "{{ mypackage }}"
+         state: present
+
+     - copy:
+         src: "/opt/{{ myfile }}"
+         dest: "/opt/{{ myfile }}"
+         mode: 0644
+         owner: tomcat
+         group: tomcat
