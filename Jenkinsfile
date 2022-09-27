@@ -31,22 +31,25 @@ stages {
   stage('checkout code') {
     steps {
       git 'https://github.com/gkdevops/ansible-code.git'
+      sh "env"
     }
   }
   
-  stage('Approval Step') {
-    steps {
-      script {
-                input {
-                message "Ready to deploy?"
-                ok "Yes"
-                parameters {
-                    string(name: "DEPLOY_ENV", defaultValue: "production")
+       stage('Approve Update') {
+            steps {
+                script {
+                    if( params.BRANCH != 'develop' ){
+                        timeout(time: 3, unit: 'DAYS') {
+                            input(message: 'Update Image?', parameters: [
+                                [$class: 'TextParameterDefinition', defaultValue: params.BRANCH, description: '', name: 'env'],
+                            ])
+                        }
+                    } else {
+                        echo "Environment ${params.environment} does not require an approval"
+                    }
                 }
             }
-      }
-    }
-  }
+        }
  
   stage('deploy ansible') {
     steps {
