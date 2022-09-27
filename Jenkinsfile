@@ -38,10 +38,10 @@ stages {
        stage('Approve Update') {
             steps {
                 script {
-                    if( params.BRANCH_NAME == 'master' ){
+                    if( env.BRANCH_NAME == 'master' ){
                         timeout(time: 3, unit: 'DAYS') {
                             input(message: 'Update Image?', parameters: [
-                                [$class: 'TextParameterDefinition', defaultValue: params.BRANCH_NAME, description: '', name: 'env'],
+                                [$class: 'TextParameterDefinition', defaultValue: env.BRANCH_NAME, description: '', name: 'env'],
                             ])
                         }
                     } else {
