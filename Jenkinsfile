@@ -53,8 +53,8 @@ stages {
  
   stage('deploy ansible') {
     steps {
-      withCredentials([string(credentialsId: 'vault-credentials', variable: 'vault-password')]) {
-        sh ("echo $vault-password > vault-password.txt ; ansible-playbook playbooks/vault-1.yml --vault-password vault-password.txt")
+      withCredentials([string(credentialsId: 'vault-credentials', variable: 'password')]) {
+        sh ("echo $password > vault-password.txt ; ansible-playbook playbooks/vault-1.yml --vault-password vault-password.txt")
       }
     }
   } 
