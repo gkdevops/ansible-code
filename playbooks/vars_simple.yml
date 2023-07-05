@@ -6,17 +6,18 @@
    hosts: webservers
    vars:
      mypackage: vim
-     myfile: helloworld.yaml
+     myfile: helloworld.yml
 
 # TASK SECTION
    tasks:
-     - package:
+     - name: To install package named "{{ mypackage }}"
+       package:
          name: "{{ mypackage }}"
          state: present
 
      - copy:
-         src: "/opt/{{ myfile }}"
-         dest: "/opt/{{ myfile }}"
+         src: "/opt/ansible-code/playbooks/{{ myfile }}"
+         dest: "/opt/ansible/{{ myfile }}"
          mode: 0644
-         owner: tomcat
-         group: tomcat
+         owner: ec2-user
+         group: ec2-user

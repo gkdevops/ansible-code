@@ -16,6 +16,13 @@
        tags:
        - install
 
+     - name: This task executed when we run tag install
+       file:
+         path: /opt/test.txt
+         state: touch
+       tags:
+       - install
+
      - name: This task gets executed when we run the tag deploy
        debug:
          msg: "motd value is {{ motd_value }}"
