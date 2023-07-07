@@ -6,11 +6,12 @@
    hosts: webservers
    gather_facts: True
    vars:
-     java_apt: openjdk-8-jdk
-     java_yum: java-1.8.0-openjdk-devel
-     download_url: https://dlcdn.apache.org/tomcat/tomcat-8/v8.5.82/bin/apache-tomcat-8.5.82.tar.gz
-     tomcat: apache-tomcat-8.5.82
+     java_apt: openjdk-11-jdk
+     java_yum: java-11-amazon-corretto-devel
+     download_url: https://dlcdn.apache.org/tomcat/tomcat-8/v8.5.90/bin/apache-tomcat-8.5.90.tar.gz
+     tomcat: apache-tomcat-8.5.90
      group_name: tomcatadm
+     user_name: tomcat
 
 # TASK SECTION
    tasks:
@@ -34,8 +35,11 @@
 
      - name: To create a user
        user:
-         name: tomcat
+         name: "{{ user_name }}"
          state: present
+         uid: 2001
+         generate_ssh_key: true
+         comment: "creating user through ansible"
          groups: "{{ group_name }}"
 
      - name: to create a dir
@@ -43,7 +47,7 @@
          path: /opt/tomcat_backup
          state: directory
          mode: 0644
-         owner: tomcat
+         owner: "{{ user_name }}"
          group: "{{ group_name }}"
 
      - name: To download apache tomcat
@@ -53,8 +57,8 @@
          dest: /opt/{{ tomcat }}.tar.gz
          backup: yes
          timeout: 20
-         owner: tomcat
-         group: tomcatadm
+         owner: "{{ user_name }}"
+         group: "{{ group_name }}"
 
      - name: To untar and unzip the package
        unarchive:
@@ -62,8 +66,8 @@
          dest: /opt/
          mode: 0755
          remote_src: yes
-         owner: tomcat
-         group: tomcatadm
+         owner: "{{ user_name }}"
+         group: "{{ group_name }}"
 
      - name: to fetch the server.xml file from remote servers
        fetch:
@@ -73,10 +77,24 @@
      - name: To update the apache tomcat config
        copy:
          src: /opt/server.xml
-         dest: /opt/apache-tomcat-8.5.82/conf/server.xml
-         owner: tomcat
-         group: tomcatadm
+         dest: /opt/{{ tomcat }}/conf/server.xml
+         owner: "{{ user_name }}"
+         group: "{{ group_name }}"
        ignore_errors: yes
 
-     - name: To start apache tomcat
-       command: nohup /opt/apache-tomcat-8.5.82/bin/startup.sh &
+     - name: To copy apache tomcat
+       copy:
+         src: /opt/ansible-code/playbooks/tomcat.service
+         dest: /etc/systemd/system
+         mode: 0644
+         owner: root
+         group: root
+
+     - name: To Reload the service file with systemd
+       systemd:
+         daemon_reload: true
+
+     - name: To start the service
+       service:
+         name: tomcat
+         state: started

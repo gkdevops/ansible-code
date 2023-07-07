@@ -1,0 +1,28 @@
+[Unit]
+Description=Tomcat - instance
+After=syslog.target network.target
+
+[Service]
+Type=forking
+
+User=tomcat
+Group=tomcatadm
+
+WorkingDirectory=/opt/apache-tomcat-8.5.90/
+
+Environment="JAVA_HOME=/usr/lib/jvm/java-11-amazon-corretto.x86_64/"
+#Environment="JAVA_OPTS=-Djava.security.egd=file:///dev/urandom"
+
+Environment="CATALINA_PID=/opt/apache-tomcat-8.5.90/tomcat.pid"
+Environment="CATALINA_BASE=/opt/apache-tomcat-8.5.90/"
+Environment="CATALINA_HOME=/opt/apache-tomcat-8.5.90/"
+Environment="CATALINA_OPTS=-Xms128M -Xmx256M -server -XX:+UseParallelGC"
+
+ExecStart=/opt/apache-tomcat-8.5.90/bin/startup.sh
+ExecStop=/opt/apache-tomcat-8.5.90/bin/shutdown.sh
+
+#RestartSec=10
+#Restart=always
+
+[Install]
+WantedBy=multi-user.target

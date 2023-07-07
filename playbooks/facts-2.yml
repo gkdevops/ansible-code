@@ -6,7 +6,7 @@
 
 # TASK SECTION
    tasks:
-     - name: To Restart the service if its 64 bit
+     - name: To Restart the sshd service if Remote Node OS is 64 bit
        service:
          name: sshd
          state: restarted
@@ -24,10 +24,10 @@
          state: restarted
        when: ( ansible_distribution == "Ubuntu" and ansible_architecture == "x86_64" )
 
-     - name: To make sure the file is always present
+     - name: To make sure the directory is created.
        file:
-         path: /opt/file1.txt
-         state: file
+         path: /opt/ansible
+         state: directory
        when: 
          - ansible_processor_cores >= 1
          - ansible_distribution == "Amazon"
@@ -43,5 +43,5 @@
 
      - name: To use the data of the fact as a variable
        file:
-         path: /opt/{{ ansible_distribution }}
+         path: "/opt/{{ ansible_distribution }}"
          state: touch
