@@ -1,7 +1,9 @@
 ---
 # tasks file for apache
+# The import tasks will load the tasks in the order define
+# This will execute 1 yaml file after another.
 
- - import_tasks: setup.yml
+ - import_tasks: pre-requisites.yml
 
  - import_tasks: install.yml
 

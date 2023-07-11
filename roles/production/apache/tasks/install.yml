@@ -1,8 +1,8 @@
 ---
 # Install code for apache
 
- - name: To install Apache
-   apt:
+ - name: To install Apache Web Server
+   package:
      name: "{{ apache_package }}"
      state: present
    tags: 

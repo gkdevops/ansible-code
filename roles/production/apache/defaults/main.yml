@@ -5,3 +5,4 @@ apache_port: 80
 apache_user: httpd
 apache_group: httpdadm
 apache_name: Goutham
+ansible_document_root: /var/www/html
