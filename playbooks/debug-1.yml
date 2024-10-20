@@ -4,9 +4,10 @@
 # HEADER SECTION
  - name: This playbook will create a file
    hosts: webservers
+   become: yes
    vars:
      myname: Goutham
-     motd_value: "{{ lookup('file', '/opt/motd') }}"
+     motd_value: "{{ lookup('file', '/home/ec2-user/ansible-code/playbooks/script.txt') }}"
 
 # TASK SECTION
    tasks:
@@ -16,12 +17,12 @@
        tags:
        - install
 
-     - name: This task executed when we run tag install
+     - name: This task executed when we run tag config
        file:
          path: /opt/test.txt
          state: touch
        tags:
-       - install
+       - config
 
      - name: This task gets executed when we run the tag deploy
        debug:

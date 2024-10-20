@@ -2,6 +2,7 @@
 # HEADER SECTION
  - name: This playbook will test forloop
    hosts: webservers
+   become: yes
 
 # TASK SECTION
    tasks:
@@ -10,8 +11,8 @@
          path: /opt/{{ item }}
          state: touch
          mode: 0644
-         owner: ubuntu
-         group: ubuntu
+         owner: ec2-user
+         group: ec2-user
        loop:
          - file1.txt
          - file2.txt

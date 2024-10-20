@@ -1,0 +1,48 @@
+  - name: Os Patching Ansible Playbook covering Ubuntu and RedHat
+    hosts: webservers
+    gather_facts: True
+    become: yes
+
+    tasks:
+      - name: Update APT package index (Debian/Ubuntu)
+        apt:
+          update_cache: yes
+        when: ansible_os_family == "Debian"
+
+      - name: Upgrade all packages (Debian/Ubuntu)
+        apt:
+          upgrade: dist
+        when: ansible_os_family == "Debian"
+
+      - name: Update YUM package index (RHEL/CentOS)
+        yum:
+          update_cache: yes
+        when: ansible_os_family == "RedHat"
+
+      - name: Upgrade all packages (RHEL/CentOS)
+        yum:
+          name: '*'
+          state: latest
+        when: ansible_os_family == "RedHat"
+
+      - name: Check if reboot is required (Debian/Ubuntu)
+        register: reboot_required_debian
+        command: /usr/bin/test -f /var/run/reboot-required
+        ignore_errors: yes
+        when: ansible_os_family == "Debian"
+
+      - name: Check if reboot is required (RHEL/CentOS)
+        register: reboot_required_redhat
+        shell: needs-restarting -r
+        ignore_errors: yes
+        when: ansible_os_family == "RedHat"
+
+      - name: Reboot server if required (Debian/Ubuntu)
+        reboot:
+        when: reboot_required_debian.rc == 0
+        when: ansible_os_family == "Debian"
+
+      - name: Reboot server if required (RHEL/CentOS)
+        reboot:
+        when: reboot_required_redhat.rc == 0
+        when: ansible_os_family == "RedHat"

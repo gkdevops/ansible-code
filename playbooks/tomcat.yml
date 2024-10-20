@@ -4,14 +4,15 @@
 # HEADER SECTION
  - name: This playbook will download, unzip, install and start Apache Tomcat
    hosts: webservers
+   become: yes
    gather_facts: True
    vars:
      java_apt: openjdk-11-jdk
-     java_yum: java-11-amazon-corretto-devel
-     download_url: https://dlcdn.apache.org/tomcat/tomcat-8/v8.5.90/bin/apache-tomcat-8.5.90.tar.gz
-     tomcat: apache-tomcat-8.5.90
-     group_name: tomcatadm
-     user_name: tomcat
+     java_yum: java-11-openjdk-devel
+     download_url: https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.96/bin/apache-tomcat-9.0.96.tar.gz
+     tomcat: apache-tomcat-9.0.96
+     group_name: tomcatgroup
+     user_name: tomcatuser
 
 # TASK SECTION
    tasks:
@@ -21,19 +22,19 @@
          state: present
        when: ( ansible_distribution == "Ubuntu" and ansible_distribution_major_version == "18" )
 
-     - name: To install java on EL Linux as its mandatory dependency
+     - name: To install java on RedHat as its mandatory dependency
        yum:
          name: "{{ java_yum }}"
          state: installed
        when:
-         ansible_distribution == "Amazon"
+         ansible_distribution == "RedHat"
 
      - name: To create a group
        group:
          name: "{{ group_name }}"
          state: present
 
-     - name: To create a user
+     - name: To create a user named "{{ user_name }}" and add to group "{{ group_name }}"
        user:
          name: "{{ user_name }}"
          state: present
@@ -72,7 +73,7 @@
      - name: to fetch the server.xml file from remote servers
        fetch:
          src: "/opt/{{ tomcat }}/conf/server.xml"
-         dest: /opt/
+         dest: /home/ec2-user/fetch_files
 
      - name: To update the apache tomcat config
        copy:
@@ -82,9 +83,9 @@
          group: "{{ group_name }}"
        ignore_errors: yes
 
-     - name: To copy apache tomcat
+     - name: To copy apache tomcat service
        copy:
-         src: /opt/ansible-code/playbooks/tomcat.service
+         src: /home/ec2-user/ansible-code/playbooks/tomcat.service
          dest: /etc/systemd/system
          mode: 0644
          owner: root

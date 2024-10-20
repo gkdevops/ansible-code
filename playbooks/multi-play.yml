@@ -4,6 +4,7 @@
 # HEADER SECTION
  - name: This playbook will run on webservers
    hosts: webservers
+   become: yes
 
 # TASK SECTION
    tasks:
@@ -18,6 +19,7 @@
 # HEADER SECTION
  - name: This playbook will run on DB Servers
    hosts: database
+   become: yes
 
 # TASK SECTION
    tasks:

@@ -3,6 +3,7 @@
  - name: This playbook will restart ur system service
    hosts: webservers
    gather_facts: True
+   become: yes
 
 # TASK SECTION
    tasks:

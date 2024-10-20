@@ -1,6 +1,6 @@
 ---
 # HEADER SECTION
- - name: This playbook will restart ur system service
+ - name: This playbook will print the facts gathered by Facts Gathering Task
    hosts: webservers
    gather_facts: True
    vars:

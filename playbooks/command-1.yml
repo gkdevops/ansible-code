@@ -4,6 +4,7 @@
 # HEADER SECTION
  - name: This playbook will create a file
    hosts: webservers
+   become: yes
 
 # TASK SECTION
    tasks:

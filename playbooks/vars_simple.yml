@@ -4,8 +4,9 @@
 # HEADER SECTION
  - name: This play will install a package and copy a file
    hosts: webservers
+   become: yes
    vars:
-     mypackage: vim
+     mypackage: wget
      myfile: helloworld.yml
 
 # TASK SECTION
@@ -16,7 +17,7 @@
          state: present
 
      - copy:
-         src: "/opt/ansible-code/playbooks/{{ myfile }}"
+         src: "/home/ec2-user/ansible-code/playbooks/{{ myfile }}"
          dest: "/opt/ansible/{{ myfile }}"
          mode: 0644
          owner: ec2-user
