@@ -5,10 +5,11 @@
  - name: This play will install a package and copy a file
    hosts: webservers
    serial: "50%"
+   become: yes
    max_fail_percentage: 10
    vars:
      mypackage: vim
-     myfile: helloworld.yaml
+     myfile: helloworld.yml
 
 # TASK SECTION
    tasks:
@@ -17,8 +18,6 @@
          state: present
 
      - copy:
-         src: "/opt/{{ myfile }}"
+         src: "/home/ec2-user/{{ myfile }}"
          dest: "/opt/{{ myfile }}"
          mode: 0644
-         owner: tomcat
-         group: tomcat

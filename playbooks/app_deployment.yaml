@@ -1,0 +1,72 @@
+---
+- name: Deploy WAR file to Tomcat Servers
+  hosts: webservers
+  become: yes
+  vars:
+    war_file_path: "/home/ec2-user/spring-petclinic-4.2.5.war"
+    app_name: "petclinic"
+    tomcat_webapps: "/opt/apache-tomcat-9.0.96/webapps"
+    tomcat_service: "tomcat"
+    tomcat_port: 8080
+    timeout_seconds: 60
+
+  tasks:
+    - name: Stop Tomcat service
+      systemd:
+        name: "{{ tomcat_service }}"
+        state: stopped
+      register: service_stop
+
+    - name: Wait for Tomcat to stop completely
+      wait_for:
+        port: "{{ tomcat_port }}"
+        state: stopped
+        timeout: 60
+
+    - name: Remove existing WAR file and directory
+      file:
+        path: "{{ item }}"
+        state: absent
+      with_items:
+        - "{{ tomcat_webapps }}/{{ app_name }}.war"
+        - "{{ tomcat_webapps }}/{{ app_name }}"
+
+    - name: Copy new WAR file to webapps directory
+      copy:
+        src: "{{ war_file_path }}"
+        dest: "{{ tomcat_webapps }}/{{ app_name }}.war"
+        owner: tomcatuser
+        group: tomcatgroup
+        mode: '0644'
+
+    - name: Start Tomcat service
+      systemd:
+        name: "{{ tomcat_service }}"
+        state: started
+      register: service_start
+
+    - name: Wait for Tomcat to start and deploy WAR
+      wait_for:
+        port: "{{ tomcat_port }}"
+        timeout: "{{ timeout_seconds }}"
+
+    - name: Verify application deployment
+      uri:
+        url: "http://localhost:{{ tomcat_port }}/{{ app_name }}"
+        method: GET
+        status_code: 200
+      register: app_status
+      retries: 5
+      delay: 10
+      until: app_status.status == 200
+      ignore_errors: yes
+
+    - name: Display deployment status
+      debug:
+        msg: "Application deployed successfully and responding on port {{ tomcat_port }}"
+      when: app_status.status == 200
+
+    - name: Display deployment failure
+      debug:
+        msg: "Application deployment verification failed. Please check logs."
+      when: app_status.status != 200
